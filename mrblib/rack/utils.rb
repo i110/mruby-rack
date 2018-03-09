@@ -239,8 +239,7 @@ module Rack
       end
       value = [value] unless Array === value
 
-      cookie = "#{escape(key)}=#{value.map { |v| escape v }.join('&')}#{domain}" \
-        "#{path}#{max_age}#{expires}#{secure}#{httponly}#{same_site}"
+      cookie = "#{escape(key)}=#{value.map { |v| escape v }.join('&')}#{domain}#{path}#{max_age}#{expires}#{secure}#{httponly}#{same_site}"
 
       case header
       when nil, ''
