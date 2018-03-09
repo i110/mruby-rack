@@ -257,7 +257,7 @@ module Rack
 
     def start &blk
       if options[:warn]
-        $-w = true
+        $VERBOSE = true
       end
 
       if includes = options[:include]
