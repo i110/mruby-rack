@@ -77,7 +77,7 @@ module Rack
       self.default_query_parser = self.default_query_parser.new_space_limit(v)
     end
 
-    if defined?(Process::CLOCK_MONOTONIC)
+    if const_defined?(:Process) && defined?(Process::CLOCK_MONOTONIC)
       def clock_time
         Process.clock_gettime(Process::CLOCK_MONOTONIC)
       end
