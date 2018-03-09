@@ -43,7 +43,7 @@ module Rack
         end
 
         def quote(str) # From WEBrick::HTTPUtils
-          '"' << str.gsub(/[\\\"]/o, "\\\1") << '"'
+          '"' << str.gsub(/[\\\"]/, "\\\1") << '"'
         end
 
       end
