@@ -1,4 +1,4 @@
-require 'rack/body_proxy'
+# require 'rack/body_proxy'
 
 module Rack
   # Rack::Head returns an empty body for all HEAD requests. It leaves

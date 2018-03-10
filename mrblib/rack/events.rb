@@ -1,5 +1,5 @@
-require 'rack/response'
-require 'rack/body_proxy'
+# require 'rack/response'
+# require 'rack/body_proxy'
 
 module Rack
   ### This middleware provides hooks to certain places in the request /

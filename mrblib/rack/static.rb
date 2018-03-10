@@ -1,5 +1,5 @@
-require "rack/file"
-require "rack/utils"
+# require "rack/file"
+# require "rack/utils"
 
 module Rack
 

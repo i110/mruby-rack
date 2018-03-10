@@ -1,5 +1,5 @@
-require 'optparse'
-require 'fileutils'
+# require 'optparse'
+# require 'fileutils'
 
 
 module Rack
@@ -265,12 +265,12 @@ module Rack
       end
 
       if library = options[:require]
-        require library
+        require library # FIXME
       end
 
       if options[:debug]
         $DEBUG = true
-        require 'pp'
+        require 'pp' # FIXME
         p options[:server]
         pp wrapped_app
         pp app

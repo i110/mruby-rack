@@ -1,11 +1,11 @@
 # AUTHOR: blink <blinketje@gmail.com>; blink#ruby-lang@irc.freenode.net
 # bugrep: Andreas Zehnder
 
-require 'rack'
-require 'time'
-require 'rack/request'
-require 'rack/response'
-require 'securerandom'
+# require 'rack'
+# require 'time'
+# require 'rack/request'
+# require 'rack/response'
+# require 'securerandom'
 
 module Rack
 

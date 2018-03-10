@@ -1,4 +1,4 @@
-require 'rack/utils'
+# require 'rack/utils'
 
 module Rack
   # Sets an "X-Runtime" response header, indicating the response

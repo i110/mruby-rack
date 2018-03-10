@@ -1,7 +1,7 @@
 # AUTHOR: blink <blinketje@gmail.com>; blink#ruby-lang@irc.freenode.net
 
-require 'rack/session/abstract/id'
-require 'memcache'
+# require 'rack/session/abstract/id'
+# require 'memcache'
 
 module Rack
   module Session

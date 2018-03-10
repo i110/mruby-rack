@@ -1,5 +1,5 @@
-require 'rack/file'
-require 'rack/body_proxy'
+# require 'rack/file'
+# require 'rack/body_proxy'
 
 module Rack
 

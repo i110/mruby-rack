@@ -1,5 +1,5 @@
-require 'rack/utils'
-require 'rack/body_proxy'
+# require 'rack/utils'
+# require 'rack/body_proxy'
 
 module Rack
 

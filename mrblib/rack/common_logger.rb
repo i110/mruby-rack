@@ -1,4 +1,4 @@
-require 'rack/body_proxy'
+# require 'rack/body_proxy'
 
 module Rack
   # Rack::CommonLogger forwards every request to the given +app+, and

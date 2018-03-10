@@ -1,6 +1,6 @@
-require 'time'
-require 'rack/utils'
-require 'rack/mime'
+# require 'time'
+# require 'rack/utils'
+# require 'rack/mime'
 
 module Rack
   # Rack::Directory serves entries below the +root+ given, according to the

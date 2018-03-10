@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require "zlib"
-require "time"  # for Time.httpdate
-require 'rack/utils'
+# require "zlib"
+# require "time"  # for Time.httpdate
+# require 'rack/utils'
 
 module Rack
   # This middleware enables compression of http responses.

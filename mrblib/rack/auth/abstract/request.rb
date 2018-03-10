@@ -1,4 +1,4 @@
-require 'rack/request'
+# require 'rack/request'
 
 module Rack
   module Auth

@@ -1,8 +1,8 @@
-require 'rack/request'
-require 'rack/utils'
-require 'rack/body_proxy'
-require 'rack/media_type'
-require 'time'
+# require 'rack/request'
+# require 'rack/utils'
+# require 'rack/body_proxy'
+# require 'rack/media_type'
+# require 'time'
 
 module Rack
   # Rack::Response provides a convenient interface to create a Rack

@@ -1,4 +1,4 @@
-require 'logger'
+# require 'logger'
 
 module Rack
   # Sets up rack.logger to write to rack.errors stream

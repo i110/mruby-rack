@@ -1,10 +1,10 @@
 # -*- encoding: binary -*-
-require 'uri'
-require 'fileutils'
-require 'set'
-require 'tempfile'
-require 'rack/query_parser'
-require 'time'
+# require 'uri'
+# require 'fileutils'
+# require 'set'
+# require 'tempfile'
+# require 'rack/query_parser'
+# require 'time'
 
 module Rack
   # Rack::Utils contains a grab-bag of useful methods for writing web

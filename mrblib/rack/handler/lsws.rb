@@ -1,6 +1,6 @@
-require 'lsapi'
-require 'rack/content_length'
-require 'rack/rewindable_input'
+# require 'lsapi'
+# require 'rack/content_length'
+# require 'rack/rewindable_input'
 
 module Rack
   module Handler

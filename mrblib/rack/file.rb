@@ -1,8 +1,8 @@
-require 'time'
-require 'rack/utils'
-require 'rack/mime'
-require 'rack/request'
-require 'rack/head'
+# require 'time'
+# require 'rack/utils'
+# require 'rack/mime'
+# require 'rack/request'
+# require 'rack/head'
 
 module Rack
   # Rack::File serves files below the +root+ directory given, according to the

@@ -1,7 +1,7 @@
-require 'zlib'
-
-require 'rack/request'
-require 'rack/response'
+# require 'zlib'
+# 
+# require 'rack/request'
+# require 'rack/response'
 
 module Rack
   # Paste has a Pony, Rack has a Lobster!
@@ -62,8 +62,8 @@ module Rack
 end
 
 if $0 == __FILE__
-  require 'rack'
-  require 'rack/show_exceptions'
+  # require 'rack'
+  # require 'rack/show_exceptions'
   Rack::Server.start(
     :app => Rack::ShowExceptions.new(Rack::Lint.new(Rack::Lobster.new)), :Port => 9292
   )

@@ -82,12 +82,12 @@ module Rack
       @handlers[server.to_s] = klass.to_s
     end
 
-    autoload :CGI, "rack/handler/cgi"
-    autoload :FastCGI, "rack/handler/fastcgi"
-    autoload :WEBrick, "rack/handler/webrick"
-    autoload :LSWS, "rack/handler/lsws"
-    autoload :SCGI, "rack/handler/scgi"
-    autoload :Thin, "rack/handler/thin"
+    # autoload :CGI, "rack/handler/cgi"
+    # autoload :FastCGI, "rack/handler/fastcgi"
+    # autoload :WEBrick, "rack/handler/webrick"
+    # autoload :LSWS, "rack/handler/lsws"
+    # autoload :SCGI, "rack/handler/scgi"
+    # autoload :Thin, "rack/handler/thin"
 
     register 'cgi', 'Rack::Handler::CGI'
     register 'fastcgi', 'Rack::Handler::FastCGI'

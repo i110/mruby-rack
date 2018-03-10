@@ -39,7 +39,7 @@ module Rack
         cfgfile.sub!(/^__END__\n.*\Z/m, '')
         app = new_from_string cfgfile, config
       else
-        require config
+        require config # FIXME
         app = Object.const_get(::File.basename(config, '.rb').split('_').map(&:capitalize).join(''))
       end
       return app, options

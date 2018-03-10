@@ -1,8 +1,8 @@
-require 'rack/auth/abstract/handler'
-require 'rack/auth/digest/request'
-require 'rack/auth/digest/params'
-require 'rack/auth/digest/nonce'
-require 'digest/md5'
+# require 'rack/auth/abstract/handler'
+# require 'rack/auth/digest/request'
+# require 'rack/auth/digest/params'
+# require 'rack/auth/digest/nonce'
+# require 'digest/md5'
 
 module Rack
   module Auth

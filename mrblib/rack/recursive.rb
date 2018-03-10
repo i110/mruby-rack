@@ -1,4 +1,4 @@
-require 'uri'
+# require 'uri'
 
 module Rack
   # Rack::ForwardRequest gets caught by Rack::Recursive and redirects
