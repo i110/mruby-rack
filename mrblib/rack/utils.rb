@@ -33,14 +33,14 @@ module Rack
     # Like URI escaping, but with %20 instead of +. Strictly speaking this is
     # true URI escaping.
     def escape_path(s)
-      ::URI::DEFAULT_PARSER.escape s
+      URI.escape s
     end
     module_function :escape_path
 
     # Unescapes the **path** component of a URI.  See Rack::Utils.unescape for
     # unescaping query parameters or form components.
     def unescape_path(s)
-      ::URI::DEFAULT_PARSER.unescape s
+      URI.unescape s
     end
     module_function :unescape_path
 

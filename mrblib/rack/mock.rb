@@ -80,8 +80,7 @@ module Rack
     # For historical reasons, we're pinning to RFC 2396.
     # URI::Parser = URI::RFC2396_Parser
     def self.parse_uri_rfc2396(uri)
-      @parser ||= URI::Parser.new
-      @parser.parse(uri)
+      URI.parse(uri)
     end
 
     # Return the Rack environment used for a request to +uri+.
