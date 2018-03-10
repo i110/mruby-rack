@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/lint'
-require 'rack/mock'
-require 'rack/null_logger'
+# require 'minitest/autorun'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'rack/null_logger'
 
 describe Rack::NullLogger do
   it "act as a noop logger" do

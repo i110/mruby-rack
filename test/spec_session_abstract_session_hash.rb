@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'rack/session/abstract/id'
+# require 'minitest/autorun'
+# require 'rack/session/abstract/id'
 
 describe Rack::Session::Abstract::SessionHash do
   attr_reader :hash

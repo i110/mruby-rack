@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/auth/basic'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/auth/basic'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Auth::Basic do
   def realm

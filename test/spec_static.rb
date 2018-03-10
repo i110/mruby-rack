@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack/static'
-require 'rack/lint'
-require 'rack/mock'
-require 'zlib'
-require 'stringio'
+# require 'minitest/autorun'
+# require 'rack/static'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'zlib'
+# require 'stringio'
 
 class DummyApp
   def call(env)

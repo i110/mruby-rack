@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'fileutils'
-require 'rack/lint'
-require 'rack/sendfile'
-require 'rack/mock'
-require 'tmpdir'
+# require 'minitest/autorun'
+# require 'fileutils'
+# require 'rack/lint'
+# require 'rack/sendfile'
+# require 'rack/mock'
+# require 'tmpdir'
 
 describe Rack::Sendfile do
   def sendfile_body

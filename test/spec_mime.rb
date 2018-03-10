@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'rack/mime'
+# require 'minitest/autorun'
+# require 'rack/mime'
 
 describe Rack::Mime do
 

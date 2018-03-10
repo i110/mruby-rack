@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/content_type'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/content_type'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::ContentType do
   def content_type(app, *args)

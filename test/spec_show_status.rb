@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'rack/show_status'
-require 'rack/lint'
-require 'rack/mock'
-require 'rack/utils'
+# require 'minitest/autorun'
+# require 'rack/show_status'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'rack/utils'
 
 describe Rack::ShowStatus do
   def show_status(app)

@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'yaml'
-require 'rack/lint'
-require 'rack/mock'
-require 'stringio'
+# require 'minitest/autorun'
+# require 'yaml'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'stringio'
 
 app = Rack::Lint.new(lambda { |env|
   req = Rack::Request.new(env)

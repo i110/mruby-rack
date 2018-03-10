@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'stringio'
-require 'tempfile'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'stringio'
+# require 'tempfile'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Lint do
   def env(*args)

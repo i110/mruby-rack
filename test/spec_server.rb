@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack'
-require 'rack/server'
-require 'tempfile'
-require 'socket'
-require 'open-uri'
+# require 'minitest/autorun'
+# require 'rack'
+# require 'rack/server'
+# require 'tempfile'
+# require 'socket'
+# require 'open-uri'
 
 module Minitest::Spec::DSL
   alias :should :it

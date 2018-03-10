@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/chunked'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/chunked'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Chunked do
   def chunked(app)

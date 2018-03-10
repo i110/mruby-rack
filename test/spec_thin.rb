@@ -1,8 +1,8 @@
-require 'minitest/autorun'
+# require 'minitest/autorun'
 begin
-require 'rack/handler/thin'
-require File.expand_path('../testrequest', __FILE__)
-require 'timeout'
+# require 'rack/handler/thin'
+# require File.expand_path('../testrequest', __FILE__)
+# require 'timeout'
 
 describe Rack::Handler::Thin do
   include TestRequest::Helpers

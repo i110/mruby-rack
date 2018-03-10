@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'stringio'
-require 'rack/rewindable_input'
+# require 'minitest/autorun'
+# require 'stringio'
+# require 'rack/rewindable_input'
 
 module RewindableTest
   extend Minitest::Spec::DSL

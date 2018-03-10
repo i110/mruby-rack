@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack/builder'
-require 'rack/config'
-require 'rack/content_length'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/builder'
+# require 'rack/config'
+# require 'rack/content_length'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Config do
   it "accept a block that modifies the environment" do

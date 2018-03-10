@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack'
-require 'rack/response'
-require 'stringio'
+# require 'minitest/autorun'
+# require 'rack'
+# require 'rack/response'
+# require 'stringio'
 
 describe Rack::Response do
   it 'has cache-control methods' do

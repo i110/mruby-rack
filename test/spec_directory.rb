@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack/directory'
-require 'rack/lint'
-require 'rack/mock'
-require 'tempfile'
-require 'fileutils'
+# require 'minitest/autorun'
+# require 'rack/directory'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'tempfile'
+# require 'fileutils'
 
 describe Rack::Directory do
   DOCROOT = File.expand_path(File.dirname(__FILE__)) unless defined? DOCROOT

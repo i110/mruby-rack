@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/content_length'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/content_length'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::ContentLength do
   def content_length(app)

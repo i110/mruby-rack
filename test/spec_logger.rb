@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'stringio'
-require 'rack/lint'
-require 'rack/logger'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'stringio'
+# require 'rack/lint'
+# require 'rack/logger'
+# require 'rack/mock'
 
 describe Rack::Logger do
   app = lambda { |env|

@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack/builder'
-require 'rack/lint'
-require 'rack/mock'
-require 'rack/show_exceptions'
-require 'rack/urlmap'
+# require 'minitest/autorun'
+# require 'rack/builder'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'rack/show_exceptions'
+# require 'rack/urlmap'
 
 class NothingMiddleware
   def initialize(app)

@@ -1,11 +1,11 @@
 # coding: utf-8
 
-require 'minitest/autorun'
-require 'rack'
-require 'rack/multipart'
-require 'rack/multipart/parser'
-require 'rack/utils'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack'
+# require 'rack/multipart'
+# require 'rack/multipart/parser'
+# require 'rack/utils'
+# require 'rack/mock'
 
 describe Rack::Multipart do
   def multipart_fixture(name, boundary = "AaB03x")

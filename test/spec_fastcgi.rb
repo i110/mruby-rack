@@ -1,4 +1,4 @@
-require 'helper'
+# require 'helper'
 
 if defined? LIGHTTPD_PID
 

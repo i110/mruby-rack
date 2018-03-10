@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/tempfile_reaper'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/tempfile_reaper'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::TempfileReaper do
   class MockTempfile

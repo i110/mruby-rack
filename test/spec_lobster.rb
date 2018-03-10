@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/lobster'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/lobster'
+# require 'rack/lint'
+# require 'rack/mock'
 
 module LobsterHelpers
   def lobster

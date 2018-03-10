@@ -1,10 +1,10 @@
-require 'minitest/autorun'
-require 'stringio'
-require 'time'  # for Time#httpdate
-require 'rack/deflater'
-require 'rack/lint'
-require 'rack/mock'
-require 'zlib'
+# require 'minitest/autorun'
+# require 'stringio'
+# require 'time'  # for Time#httpdate
+# require 'rack/deflater'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'zlib'
 
 describe Rack::Deflater do
 

@@ -1,7 +1,7 @@
-require 'minitest/autorun'
+# require 'minitest/autorun'
 ### WARNING: there be hax in this file.
 
-require 'rack/session/abstract/id'
+# require 'rack/session/abstract/id'
 
 describe Rack::Session::Abstract::ID do
   attr_reader :id

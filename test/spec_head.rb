@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/head'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/head'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Head do
 

@@ -1,10 +1,10 @@
-require 'minitest/autorun'
-require 'stringio'
-require 'cgi'
-require 'rack/request'
-require 'rack/mock'
-require 'rack/multipart'
-require 'securerandom'
+# require 'minitest/autorun'
+# require 'stringio'
+# require 'cgi'
+# require 'rack/request'
+# require 'rack/mock'
+# require 'rack/multipart'
+# require 'securerandom'
 
 class RackRequestTest < Minitest::Spec
   it "copies the env when duping" do

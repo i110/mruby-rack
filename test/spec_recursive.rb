@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/lint'
-require 'rack/recursive'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/lint'
+# require 'rack/recursive'
+# require 'rack/mock'
 
 describe Rack::Recursive do
   before do

@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/show_exceptions'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/show_exceptions'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::ShowExceptions do
   def show_exceptions(app)

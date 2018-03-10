@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/lint'
-require 'rack/mock'
-require 'rack/runtime'
+# require 'minitest/autorun'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'rack/runtime'
 
 describe Rack::Runtime do
   def runtime_app(app, *args)

@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'rack/handler'
+# require 'minitest/autorun'
+# require 'rack/handler'
 
 class Rack::Handler::Lobster; end
 class RockLobster; end

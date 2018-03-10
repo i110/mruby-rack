@@ -1,9 +1,9 @@
-require 'helper'
+# require 'helper'
 
 if defined? LIGHTTPD_PID
 
-require File.expand_path('../testrequest', __FILE__)
-require 'rack/handler/cgi'
+# require File.expand_path('../testrequest', __FILE__)
+# require 'rack/handler/cgi'
 
 describe Rack::Handler::CGI do
   include TestRequest::Helpers

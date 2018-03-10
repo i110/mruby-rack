@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/lint'
-require 'rack/lock'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/lint'
+# require 'rack/lock'
+# require 'rack/mock'
 
 class Lock
   attr_reader :synchronized

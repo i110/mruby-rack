@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'rack/session/cookie'
-require 'rack/lint'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack/session/cookie'
+# require 'rack/lint'
+# require 'rack/mock'
 
 describe Rack::Session::Cookie do
   incrementor = lambda do |env|

@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'rack/etag'
-require 'rack/lint'
-require 'rack/mock'
-require 'time'
+# require 'minitest/autorun'
+# require 'rack/etag'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'time'
 
 describe Rack::ETag do
   def etag(app, *args)

@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'rack/body_proxy'
-require 'stringio'
+# require 'minitest/autorun'
+# require 'rack/body_proxy'
+# require 'stringio'
 
 describe Rack::BodyProxy do
   it 'call each on the wrapped body' do

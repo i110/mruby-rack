@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'time'
-require 'rack/conditional_get'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'time'
+# require 'rack/conditional_get'
+# require 'rack/mock'
 
 describe Rack::ConditionalGet do
   def conditional_get(app)

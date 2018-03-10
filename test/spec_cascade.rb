@@ -1,10 +1,10 @@
-require 'minitest/autorun'
-require 'rack'
-require 'rack/cascade'
-require 'rack/file'
-require 'rack/lint'
-require 'rack/urlmap'
-require 'rack/mock'
+# require 'minitest/autorun'
+# require 'rack'
+# require 'rack/cascade'
+# require 'rack/file'
+# require 'rack/lint'
+# require 'rack/urlmap'
+# require 'rack/mock'
 
 describe Rack::Cascade do
   def cascade(*args)

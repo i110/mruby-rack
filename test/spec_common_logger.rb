@@ -1,9 +1,9 @@
-require 'minitest/autorun'
-require 'rack/common_logger'
-require 'rack/lint'
-require 'rack/mock'
-
-require 'logger'
+# require 'minitest/autorun'
+# require 'rack/common_logger'
+# require 'rack/lint'
+# require 'rack/mock'
+# 
+# require 'logger'
 
 describe Rack::CommonLogger do
   obj = 'foobar'

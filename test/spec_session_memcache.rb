@@ -1,9 +1,9 @@
-require 'minitest/autorun'
+# require 'minitest/autorun'
 begin
-  require 'rack/session/memcache'
-  require 'rack/lint'
-  require 'rack/mock'
-  require 'thread'
+  # require 'rack/session/memcache'
+  # require 'rack/lint'
+  # require 'rack/mock'
+  # require 'thread'
 
   describe Rack::Session::Memcache do
     session_key = Rack::Session::Memcache::DEFAULT_OPTIONS[:key]

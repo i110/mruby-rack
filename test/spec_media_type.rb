@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'rack/media_type'
+# require 'minitest/autorun'
+# require 'rack/media_type'
 
 describe Rack::MediaType do
   before { @empty_hash = {} }

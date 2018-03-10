@@ -1,5 +1,5 @@
-require 'helper'
-require 'rack/events'
+# require 'helper'
+# require 'rack/events'
 
 module Rack
   class TestEvents < Rack::TestCase

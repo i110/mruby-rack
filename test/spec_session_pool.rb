@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'thread'
-require 'rack/lint'
-require 'rack/mock'
-require 'rack/session/pool'
+# require 'minitest/autorun'
+# require 'thread'
+# require 'rack/lint'
+# require 'rack/mock'
+# require 'rack/session/pool'
 
 describe Rack::Session::Pool do
   session_key = Rack::Session::Pool::DEFAULT_OPTIONS[:key]
