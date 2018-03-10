@@ -42,7 +42,6 @@ module Rack
         env[SCRIPT_NAME] = ""
 
         rack_input = StringIO.new(input_body)
-        rack_input.set_encoding(Encoding::BINARY)
 
         env.update(
           RACK_VERSION      => Rack::VERSION,

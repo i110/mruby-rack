@@ -11,8 +11,7 @@ module Rack
         raise "#{path} file does not exist" unless ::File.exist?(path)
         @content_type = content_type
         @original_filename = ::File.basename(path)
-        @tempfile = Tempfile.new([@original_filename, ::File.extname(path)], encoding: Encoding::BINARY)
-        @tempfile.binmode if binary
+        @tempfile = Tempfile.new([@original_filename, ::File.extname(path)])
         FileUtils.copy_file(path, @tempfile.path)
       end
 

@@ -16,7 +16,6 @@ module Rack
         flattened_params.map do |name, file|
           if file.respond_to?(:original_filename)
             ::File.open(file.path, 'rb') do |f|
-              f.set_encoding(Encoding::BINARY)
               content_for_tempfile(f, file, name)
             end
           else

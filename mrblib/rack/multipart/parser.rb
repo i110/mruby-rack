@@ -131,7 +131,6 @@ module Rack
         def on_mime_head mime_index, head, filename, content_type, name
           if filename
             body = @tempfile.call(filename, content_type)
-            body.binmode if body.respond_to?(:binmode)
             klass = TempfilePart
             @open_files += 1
           else
@@ -190,7 +189,6 @@ module Rack
       def result
         @collector.each do |part|
           part.get_data do |data|
-            tag_multipart_encoding(part.filename, part.content_type, part.name, data)
             @query_parser.normalize_params(@params, part.name, data, @query_parser.param_depth_limit)
           end
         end
@@ -302,7 +300,7 @@ module Rack
           if filename = params['filename']
             filename = $1 if filename =~ /^"(.*)"$/
           elsif filename = params['filename*']
-            encoding, _, filename = filename.split("'", 3)
+            _, _, filename = filename.split("'", 3)
           end
         when BROKEN_QUOTED, BROKEN_UNQUOTED
           filename = $1
@@ -320,43 +318,8 @@ module Rack
           filename = filename.gsub(/\\(.)/, '\1')
         end
 
-        if encoding
-          filename.force_encoding ::Encoding.find(encoding)
-        end
-
         filename
       end
-
-      CHARSET   = "charset"
-
-      def tag_multipart_encoding(filename, content_type, name, body)
-        name = name.to_s
-        encoding = Encoding::UTF_8
-
-        name.force_encoding(encoding)
-
-        return if filename
-
-        if content_type
-          list         = content_type.split(';')
-          type_subtype = list.first
-          type_subtype.strip!
-          if TEXT_PLAIN == type_subtype
-            rest         = list.drop 1
-            rest.each do |param|
-              k,v = param.split('=', 2)
-              k.strip!
-              v.strip!
-              v = v[1..-2] if v[0] == '"' && v[-1] == '"'
-              encoding = Encoding.find v if k == CHARSET
-            end
-          end
-        end
-
-        name.force_encoding(encoding)
-        body.force_encoding(encoding)
-      end
-
 
       def handle_empty_content!(content, eof)
         if content.nil? || content.empty?

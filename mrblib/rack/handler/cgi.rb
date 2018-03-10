@@ -5,7 +5,6 @@ module Rack
   module Handler
     class CGI
       def self.run(app, options=nil)
-        $stdin.binmode
         serve app
       end
 
