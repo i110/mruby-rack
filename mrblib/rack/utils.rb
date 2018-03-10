@@ -163,7 +163,7 @@ module Rack
       "/" => "&#x2F;"
     }
 
-    ESCAPE_HTML_PATTERN = Regexp.union(*ESCAPE_HTML.keys)
+    ESCAPE_HTML_PATTERN = Regexp.new(ESCAPE_HTML.keys.join('|'))
 
     # Escape ampersands, brackets and quotes to their HTML/XML entities.
     def escape_html(string)
@@ -566,7 +566,7 @@ module Rack
     end
     module_function :status_code
 
-    PATH_SEPS = Regexp.union(*[::File::SEPARATOR, ::File::ALT_SEPARATOR].compact)
+    PATH_SEPS = Regexp.new([::File::SEPARATOR, ::File::ALT_SEPARATOR].compact.join('|'))
 
     def clean_path_info(path_info)
       parts = path_info.split PATH_SEPS
