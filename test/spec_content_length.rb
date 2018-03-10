@@ -55,8 +55,10 @@ describe Rack::ContentLength do
   # end
 
   it "close bodies that need to be closed" do
-    body = Struct.new(:body) do
+    body = Class.new do
+      attr_accessor :body
       attr_reader :closed
+      def initialize(body); @body = body; end
       def each; body.join; end
       def close; @closed = true; end
       def to_ary; end
