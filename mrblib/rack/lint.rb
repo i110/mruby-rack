@@ -493,14 +493,17 @@ module Rack
 
     class HijackWrapper
       include Assertion
-      extend Forwardable
 
       REQUIRED_METHODS = [
         :read, :write, :read_nonblock, :write_nonblock, :flush, :close,
         :close_read, :close_write, :closed?
       ]
 
-      def_delegators :@io, *REQUIRED_METHODS
+      REQUIRED_METHODS.each do |m|
+        define_method(m) do |*args, &block|
+          @io.send(m, *args, &block)
+        end
+      end
 
       def initialize(io)
         @io = io
