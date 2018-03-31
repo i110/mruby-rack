@@ -60,17 +60,23 @@ module Rack
       string
     end
 
+    class Frame
+      attr_accessor :filename, :lineno, :function
+      attr_accessor :pre_context_lineno, :pre_context, :context_line, :post_context_lineno, :post_context
+    end
+
     def pretty(env, exception)
       req = Rack::Request.new(env)
 
       # This double assignment is to prevent an "unused variable" warning on
       # Ruby 1.9.3.  Yes, it is dumb, but I don't like Ruby yelling at me.
-      path = path = (req.script_name + req.path_info).squeeze("/")
+      path = path = (req.script_name + req.path_info)
+      path.gsub!(%r|/+|, '/')
 
       # This double assignment is to prevent an "unused variable" warning on
       # Ruby 1.9.3.  Yes, it is dumb, but I don't like Ruby yelling at me.
       frames = frames = exception.backtrace.map { |line|
-        frame = OpenStruct.new
+        frame = Frame.new
         if line =~ /(.*?):(\d+)(:in `(.*)')?/
           frame.filename = $1
           frame.lineno = $2.to_i
@@ -93,7 +99,7 @@ module Rack
         end
       }.compact
 
-      TEMPLATE.result(binding)
+      template_result(env, exception, req, path, frames)
     end
 
     def h(obj)                  # :nodoc:
@@ -107,11 +113,31 @@ module Rack
 
     # :stopdoc:
 
+    def template_result(env, exception, req, path, frames)
+      code = ''
+      template = TEMPLATE_HTML
+      while m = /<%(.*?)%>/.match(template) do
+        exp = m[1]
+        code += "ret += <<\"EOS\"\n#{$`}\nEOS\n"
+        if exp.start_with?('=')
+          code += "ret += #{exp[1..-1]}\n"
+        else
+          code += "#{exp}\n"
+        end
+
+        template = $'
+      end
+      code += "ret += <<\"EOS\"\n#{template}\nEOS\n"
+      ret = ''
+      eval code, nil, '(template)', 1
+      ret
+    end
+
     # adapted from Django <djangoproject.com>
     # Copyright (c) 2005, the Lawrence Journal-World
     # Used under the modified BSD license:
     # http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5
-    TEMPLATE = ERB.new(<<-'HTML'.gsub(/^      /, ''))
+    TEMPLATE_HTML = <<-'HTML'.gsub(/^      /, '')
       <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
       <html lang="en">
       <head>
@@ -294,7 +320,7 @@ module Rack
               </tr>
             </thead>
             <tbody>
-                <% req.GET.sort_by { |k, v| k.to_s }.each { |key, val| %>
+                <% req.GET.to_a.sort_by { |k, v| k.to_s }.each { |key, val| %>
                 <tr>
                   <td><%=h key %></td>
                   <td class="code"><div><%=h val.inspect %></div></td>
@@ -316,7 +342,7 @@ module Rack
               </tr>
             </thead>
             <tbody>
-                <% req.POST.sort_by { |k, v| k.to_s }.each { |key, val| %>
+                <% req.POST.to_a.sort_by { |k, v| k.to_s }.each { |key, val| %>
                 <tr>
                   <td><%=h key %></td>
                   <td class="code"><div><%=h val.inspect %></div></td>
@@ -360,7 +386,7 @@ module Rack
               </tr>
             </thead>
             <tbody>
-                <% env.sort_by { |k, v| k.to_s }.each { |key, val| %>
+                <% env.to_a.sort_by { |k, v| k.to_s }.each { |key, val| %>
                 <tr>
                   <td><%=h key %></td>
                   <td class="code"><div><%=h val %></div></td>
