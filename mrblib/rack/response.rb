@@ -19,19 +19,11 @@ module Rack
   # Your application's +call+ should end returning Response#finish.
 
   class Response
-    attr_accessor :length, :status
+    attr_accessor :length, :status, :body
     attr_reader :header
     alias headers header
 
     CHUNKED = 'chunked'.freeze
-
-    # see: https://github.com/mruby/mruby/issues/3966
-    def body
-      @body
-    end
-    def body=(val)
-      @body = val
-    end
 
     def initialize(body=[], status=200, header={})
       @status = status.to_i
