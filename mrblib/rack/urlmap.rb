@@ -35,7 +35,8 @@ module Rack
         match = Regexp.new("^#{Regexp.quote(location).gsub('/', '/+')}(.*)", nil, 'n')
 
         [host, location, match, app]
-      }.sort_by do |(host, location, _, _)|
+      }.sort_by do |item|
+        host, location = item
         [host ? -host.size : INFINITY, -location.size]
       end
     end
