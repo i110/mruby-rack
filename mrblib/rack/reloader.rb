@@ -69,7 +69,7 @@ module Rack
 
     module Stat
       def rotation
-        files = [$0, *$LOADED_FEATURES].uniq
+        files = [$0, *($LOADED_FEATURES || $")].uniq
         paths = ['./', *$LOAD_PATH].uniq
 
         files.map{|file|
