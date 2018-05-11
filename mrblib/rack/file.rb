@@ -52,7 +52,7 @@ module Rack
       path = ::File.join(@root, clean_path_info)
 
       available = begin
-        ::File.file?(path) && ::File.readable?(path)
+        ::File.file?(path) && ::File.mtime(path)
       rescue SystemCallError
         false
       end
