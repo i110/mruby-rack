@@ -4,6 +4,14 @@
 # require 'rack/request'
 # require 'rack/head'
 
+unless File.respond_to?(:mtime)
+  class File
+    def self.mtime(path)
+      File.stat(path).mtime
+    end
+  end
+end
+
 module Rack
   # Rack::File serves files below the +root+ directory given, according to the
   # path info of the Rack request.
