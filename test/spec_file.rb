@@ -4,7 +4,7 @@
 # require 'rack/mock'
 
 describe Rack::File do
-  DOCROOT = File.expand_path(File.dirname(__FILE__)) unless defined? DOCROOT
+  DOCROOT = File.expand_path(File.dirname(__FILE__))
 
   def file(*args)
     Rack::Lint.new Rack::File.new(*args)
