@@ -2,7 +2,7 @@
 #       Rack::Reloader is subject to the terms of an MIT-style license.
 #      See COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-require 'pathname'
+# require 'pathname'
 
 module Rack
 
@@ -85,7 +85,7 @@ module Rack
       # path.
       def figure_path(file, paths)
         found = @cache[file]
-        found = file if !found and Pathname.new(file).absolute?
+        found = file if !found and file.start_with?(File::SEPARATOR)
         found, stat = safe_stat(found)
         return found, stat if found
 
