@@ -466,7 +466,9 @@ module Rack
       end
 
       def merge(other)
-        hash = dup
+        # NOTE: Hash#dup accidentally drops the class infomation (mruby's bug?)
+        # hash = dup
+        hash = self.class.new(self)
         hash.merge! other
       end
 
