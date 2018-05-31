@@ -77,6 +77,7 @@ module Rack
     # conflict, a ParameterTypeError is raised.
     def normalize_params(params, name, v, depth)
       raise RangeError if depth <= 0
+      name ||= ''
 
       name =~ %r(\A[\[\]]*([^\[\]]+)\]*)
       k = $1 || ''.freeze
