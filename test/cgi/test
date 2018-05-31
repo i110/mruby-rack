@@ -1,0 +1,4 @@
+xxxxxxxxxxxxxxxxxxx
+# -*- ruby -*-
+xxxxxxxxxxxxxxxxxxx
+NOTE: this file is prepared so that the location and the file size are exactly same as cruby's rack to pass the test (test/spec_file.rb).
