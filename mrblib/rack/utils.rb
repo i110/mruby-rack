@@ -210,7 +210,7 @@ module Rack
       #   precede those with less specific.  Ordering with respect to other
       #   attributes (e.g., Domain) is unspecified.
       cookies = parse_query(header, ';,') { |s| unescape(s) rescue s }
-      cookies.each_with_object({}) { |(k,v), hash| hash[k] = Array === v ? v.first : v }
+      cookies.each_with_object({}) { |p, hash| k, v = p; hash[k] = Array === v ? v.first : v }
     end
     module_function :parse_cookies_header
 
