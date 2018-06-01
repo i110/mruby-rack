@@ -42,7 +42,7 @@ table { width:100%%; }
     class DirectoryBody < Struct.new(:root, :path, :files)
       def each
         show_path = Rack::Utils.escape_html(path.sub(/^#{root}/,''))
-        listings = files.map{|f| DIR_FILE % DIR_FILE_escape(*f) }*"\n"
+        listings = files.map{|f| DIR_FILE % DIR_FILE_escape(*f) }.join("\n")
         page  = DIR_PAGE % [ show_path, show_path , listings ]
         page.each_line{|l| yield l }
       end
