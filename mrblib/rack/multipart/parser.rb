@@ -281,8 +281,11 @@ module Rack
       def rx; @rx; end
 
       def consume_boundary
-        while @buf.gsub!(/\A([^\n]*(?:\n|\Z))/, '')
+        # NOTE mruby-onig-regexp's gsub! seems broken at some point..
+        # while @buf.gsub!(/\A([^\n]*(?:\n|\Z))/, '')
+        while @buf.match(/\A([^\n]*(?:\n|\Z))/)
           read_buffer = $1
+          @buf = $'
           case read_buffer.strip
           when full_boundary then return :BOUNDARY
           when @end_boundary then return :END_BOUNDARY
