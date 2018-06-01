@@ -46,7 +46,6 @@ MRuby::Gem::Specification.new('mruby-rack') do |spec|
     "#{dir}/mrblib/rack/multipart.rb",
     "#{dir}/mrblib/rack/null_logger.rb",
     "#{dir}/mrblib/rack/recursive.rb",
-    "#{dir}/mrblib/rack/reloader.rb",
     "#{dir}/mrblib/rack/runtime.rb",
     "#{dir}/mrblib/rack/sendfile.rb",
     "#{dir}/mrblib/rack/session/abstract/id.rb",
