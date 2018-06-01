@@ -75,7 +75,6 @@ MRuby::Gem::Specification.new('mruby-rack') do |spec|
   spec.add_dependency 'mruby-method', :github => 'ksss/mruby-method'
   spec.add_dependency 'mruby-logger', :github => 'katzer/mruby-logger'
   spec.add_dependency 'mruby-time-strftime', :github => 'monochromegane/mruby-time-strftime'
-  spec.add_dependency 'mruby-mutex', :github => 'matsumotory/mruby-mutex'
 
   spec.add_test_dependency 'mruby-catch-throw', :github => 'IceDragon200/mruby-catch-throw'
   spec.add_test_dependency 'mruby-sleep', :github => 'matsumotory/mruby-sleep'
