@@ -30,24 +30,26 @@ module Rack
 
   class Builder
     def self.parse_file(config, opts = Server::Options.new)
-      options = {}
-      if config =~ /\.ru$/
-        cfgfile = ::File.read(config)
-        if cfgfile[/^#\\(.*)/] && opts
-          options = opts.parse! $1.split(/\s+/)
-        end
-        cfgfile.sub!(/^__END__\n.*\Z/m, '')
-        app = new_from_string cfgfile, config
-      else
-        require config # FIXME
-        app = Object.const_get(::File.basename(config, '.rb').split('_').map(&:capitalize).join(''))
-      end
-      return app, options
+      raise NotImplementedError.new 'not implemented yet'
+      # options = {}
+      # if config =~ /\.ru$/
+      #   cfgfile = ::File.read(config)
+      #   if cfgfile[/^#\\(.*)/] && opts
+      #     options = opts.parse! $1.split(/\s+/)
+      #   end
+      #   cfgfile.sub!(/^__END__\n.*\Z/m, '')
+      #   app = new_from_string cfgfile, config
+      # else
+      #   require config # FIXME
+      #   app = Object.const_get(::File.basename(config, '.rb').split('_').map(&:capitalize).join(''))
+      # end
+      # return app, options
     end
 
     def self.new_from_string(builder_script, file="(rackup)")
-      eval "Rack::Builder.new {\n" + builder_script + "\n}.to_app",
-        TOPLEVEL_BINDING, file, 0
+      raise NotImplementedError.new 'not implemented yet'
+      # eval "Rack::Builder.new {\n" + builder_script + "\n}.to_app",
+      #   TOPLEVEL_BINDING, file, 0
     end
 
     def initialize(default_app = nil, &block)
