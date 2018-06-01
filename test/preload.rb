@@ -49,9 +49,30 @@ class MTest::Unit::TestCase
     flunk "#{msg}#{mu_pp(exp)} expected but nothing was raised."
   end
 
+  def assert_predicate(o1, op, msg = nil)
+    msg ||= "Expected #{o1.inspect} to be #{op}"
+    assert o1.__send__(op), msg
+  end
+
+  def refute(test, msg = nil)
+    msg ||= "Expected #{test.inspect} to not be truthy"
+    not assert !test, msg
+  end
+
+  def refute_same(exp, act, msg = nil)
+    msg ||= "Expected %s (oid=%d) to not be the same as %s (oid=%d)" %
+        [act.inspect, act.object_id, exp.inspect, exp.object_id]
+    refute exp.equal?(act), msg
+  end
+
   def refute_respond_to(obj, meth, msg = nil)
     msg ||= "Expected #{obj.inspect} to not respond to ##{meth}"
     assert_false obj.respond_to?(meth), msg
+  end
+
+  def refute_predicate(o1, op, msg = nil)
+    msg ||= "Expected #{o1.inspect} to not be #{op}"
+    refute o1.__send__(op), msg
   end
 
 end
