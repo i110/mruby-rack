@@ -355,7 +355,11 @@ module Rack
       #
       # Note that modifications will not be persisted in the env. Use update_param or delete_param if you want to destructively modify params.
       def params
-        self.GET.merge(self.POST)
+        # NOTE: merge drops default proc (maybe mruby's bug), so use dup and merge!
+        # self.GET.merge(self.POST)
+        h = self.GET.dup
+        h.merge!(self.POST)
+        h
       rescue EOFError
         self.GET.dup
       end
