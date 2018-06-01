@@ -13,7 +13,7 @@ module Rack
   class ShowStatus
     def initialize(app)
       @app = app
-      @template = ERB.new(TEMPLATE)
+      # @template = ERB.new(TEMPLATE)
     end
 
     def call(env)
@@ -33,7 +33,7 @@ module Rack
         # Ruby 1.9.3.  Yes, it is dumb, but I don't like Ruby yelling at me.
         detail = detail = env[RACK_SHOWSTATUS_DETAIL] || message
 
-        body = @template.result(binding)
+        body = template_result(req, message, status.to_s, detail)
         size = body.bytesize
         [status, headers.merge(CONTENT_TYPE => "text/html", CONTENT_LENGTH => size.to_s), [body]]
       else
@@ -51,6 +51,26 @@ module Rack
     end
 
     # :stopdoc:
+
+   def template_result(req, message, status, detail)
+     code = ''
+     template = TEMPLATE
+     while m = /<%(.*?)%>/.match(template) do
+       exp = m[1]
+       code += "ret += <<\"EOS\"\n#{$`}\nEOS\n"
+       if exp.start_with?('=')
+         code += "ret += #{exp[1..-1]}\n"
+       else
+         code += "#{exp}\n"
+       end
+
+       template = $'
+     end
+     code += "ret += <<\"EOS\"\n#{template}\nEOS\n"
+     ret = ''
+     eval code, nil, '(template)', 1
+     ret
+   end
 
 # adapted from Django <djangoproject.com>
 # Copyright (c) 2005, the Lawrence Journal-World
@@ -83,7 +103,7 @@ TEMPLATE = <<'HTML'
 </head>
 <body>
   <div id="summary">
-    <h1><%=h message %> <span>(<%= status.to_i %>)</span></h1>
+    <h1><%=h message %> <span>(<%= status %>)</span></h1>
     <table class="meta">
       <tr>
         <th>Request Method:</th>
