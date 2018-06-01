@@ -1,6 +1,3 @@
-# require 'rack/auth/abstract/handler'
-# require 'rack/auth/abstract/request'
-
 module Rack
   module Auth
     # Rack::Auth::Basic implements HTTP Basic Authentication, as per RFC 2617.

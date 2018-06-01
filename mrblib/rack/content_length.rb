@@ -1,6 +1,3 @@
-# require 'rack/utils'
-# require 'rack/body_proxy'
-
 module Rack
 
   # Sets the Content-Length header on responses with fixed-length bodies.

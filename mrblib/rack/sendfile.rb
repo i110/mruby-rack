@@ -1,6 +1,3 @@
-# require 'rack/file'
-# require 'rack/body_proxy'
-
 module Rack
 
   # = Sendfile

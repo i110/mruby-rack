@@ -1,6 +1,3 @@
-# require 'rack/utils'
-# require 'forwardable'
-
 module Rack
   # Rack::Lint validates your application and the requests and
   # responses according to the Rack spec.

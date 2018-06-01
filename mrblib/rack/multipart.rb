@@ -1,5 +1,3 @@
-# require 'rack/multipart/parser'
-
 module Rack
   # A multipart form data parser, adapted from IOWA.
   #

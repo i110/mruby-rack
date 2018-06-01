@@ -1,7 +1,3 @@
-# require 'rack/auth/abstract/request'
-# require 'rack/auth/digest/params'
-# require 'rack/auth/digest/nonce'
-
 module Rack
   module Auth
     module Digest

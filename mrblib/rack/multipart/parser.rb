@@ -1,5 +1,3 @@
-# require 'rack/utils'
-
 module Rack
   module Multipart
     class MultipartPartLimitError < Errno::EMFILE; end

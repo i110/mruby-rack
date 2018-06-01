@@ -1,5 +1,3 @@
-# require 'rack/request'
-
 module Rack
   module Auth
     class AbstractRequest

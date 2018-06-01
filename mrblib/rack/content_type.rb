@@ -1,5 +1,3 @@
-# require 'rack/utils'
-
 module Rack
 
   # Sets the Content-Type header on responses which don't have one.

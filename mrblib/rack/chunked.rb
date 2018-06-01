@@ -1,5 +1,3 @@
-# require 'rack/utils'
-
 module Rack
 
   # Middleware that applies chunked transfer encoding to response bodies

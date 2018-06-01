@@ -1,5 +1,3 @@
-# require 'rack/body_proxy'
-
 module Rack
 
   # Middleware tracks and cleans Tempfiles created throughout a request (i.e. Rack::Multipart)

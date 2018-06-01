@@ -1,9 +1,3 @@
-# require 'time'
-# require 'rack/utils'
-# require 'rack/mime'
-# require 'rack/request'
-# require 'rack/head'
-
 unless File.respond_to?(:mtime)
   class File
     def self.mtime(path)

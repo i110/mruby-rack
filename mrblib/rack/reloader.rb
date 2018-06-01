@@ -2,8 +2,6 @@
 #       Rack::Reloader is subject to the terms of an MIT-style license.
 #      See COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-# require 'pathname'
-
 module Rack
 
   # High performant source reloader

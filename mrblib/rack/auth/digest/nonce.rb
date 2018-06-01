@@ -1,5 +1,3 @@
-# require 'digest/md5'
-
 module Rack
   module Auth
     module Digest
