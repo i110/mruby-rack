@@ -12,7 +12,11 @@ module Rack
         @content_type = content_type
         @original_filename = ::File.basename(path)
         @tempfile = Tempfile.new([@original_filename, ::File.extname(path)])
-        FileUtils.copy_file(path, @tempfile.path)
+        File.open(path, 'r') {|src|
+          File.open(@tempfile.path, 'w') {|dst|
+            dst.write(src.read)
+          }
+        }
       end
 
       def path
