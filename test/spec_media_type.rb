@@ -1,6 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/media_type'
-
 describe Rack::MediaType do
   before { @empty_hash = {} }
 
@@ -40,3 +37,5 @@ describe Rack::MediaType do
     end
   end
 end
+
+MTest::Unit.new.run

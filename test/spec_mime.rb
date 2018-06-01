@@ -1,6 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/mime'
-
 describe Rack::Mime do
 
   it "should return the fallback mime-type for files with no extension" do
@@ -49,3 +46,5 @@ describe Rack::Mime do
   end
 
 end
+
+MTest::Unit.new.run

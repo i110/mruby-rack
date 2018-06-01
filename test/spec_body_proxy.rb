@@ -1,7 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/body_proxy'
-# require 'stringio'
-
 describe Rack::BodyProxy do
   it 'call each on the wrapped body' do
     called = false
@@ -83,3 +79,5 @@ describe Rack::BodyProxy do
     Rack::BodyProxy.method_defined?(:each).must_equal true
   end
 end
+
+MTest::Unit.new.run

@@ -1,7 +1,3 @@
-# require 'minitest/autorun'
-# require 'stringio'
-# require 'rack/rewindable_input'
-
 module RewindableTest
   extend Minitest::Spec::DSL
 
@@ -126,3 +122,5 @@ describe Rack::RewindableInput do
     include RewindableTest
   end
 end
+
+MTest::Unit.new.run

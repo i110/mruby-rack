@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/file'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::File do
   DOCROOT = File.expand_path(File.dirname(__FILE__))
 
@@ -262,3 +257,5 @@ describe Rack::File do
   end
 
 end
+
+MTest::Unit.new.run

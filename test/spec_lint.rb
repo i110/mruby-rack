@@ -1,9 +1,3 @@
-# require 'minitest/autorun'
-# require 'stringio'
-# require 'tempfile'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::Lint do
   def env(*args)
     Rack::MockRequest.env_for("/", *args)
@@ -129,36 +123,40 @@ describe Rack::Lint do
     lambda {
       Rack::Lint.new(nil).call(env("rack.input" => ""))
     }.must_raise(Rack::Lint::LintError).
-      message.must_match(/does not respond to #gets/)
+      message.must_match(/does not respond to #each/)
+      # NOTE: In mruby, Kernel#gets can respond
+      # message.must_match(/does not respond to #gets/)
 
-    lambda {
-      input = Object.new
-      def input.binmode?
-        false
-      end
-      Rack::Lint.new(nil).call(env("rack.input" => input))
-    }.must_raise(Rack::Lint::LintError).
-      message.must_match(/is not opened in binary mode/)
+    # lambda {
+    #   input = Object.new
+    #   def input.binmode?
+    #     false
+    #   end
+    #   Rack::Lint.new(nil).call(env("rack.input" => input))
+    # }.must_raise(Rack::Lint::LintError).
+    #   message.must_match(/is not opened in binary mode/)
 
-    lambda {
-      input = Object.new
-      def input.external_encoding
-        result = Object.new
-        def result.name
-          "US-ASCII"
-        end
-        result
-      end
-      Rack::Lint.new(nil).call(env("rack.input" => input))
-    }.must_raise(Rack::Lint::LintError).
-      message.must_match(/does not have ASCII-8BIT as its external encoding/)
+    # lambda {
+    #   input = Object.new
+    #   def input.external_encoding
+    #     result = Object.new
+    #     def result.name
+    #       "US-ASCII"
+    #     end
+    #     result
+    #   end
+    #   Rack::Lint.new(nil).call(env("rack.input" => input))
+    # }.must_raise(Rack::Lint::LintError).
+    #   message.must_match(/does not have ASCII-8BIT as its external encoding/)
   end
 
   it "notice error errors" do
     lambda {
       Rack::Lint.new(nil).call(env("rack.errors" => ""))
     }.must_raise(Rack::Lint::LintError).
-      message.must_match(/does not respond to #puts/)
+      message.must_match(/does not respond to #write/)
+      # NOTE: In mruby, Kernel#puts can respond
+      # message.must_match(/does not respond to #puts/)
   end
 
   it "notice status errors" do
@@ -484,7 +482,6 @@ describe Rack::Lint do
 
   def assert_lint(*args)
     hello_str = "hello world"
-    hello_str.force_encoding(Encoding::ASCII_8BIT)
 
     Rack::Lint.new(lambda { |env|
                      env["rack.input"].send(:read, *args)
@@ -513,3 +510,5 @@ describe "Rack::Lint::InputWrapper" do
     wrapper.read.must_equal "123"
   end
 end
+
+MTest::Unit.new.run

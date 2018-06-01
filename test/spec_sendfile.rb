@@ -1,15 +1,9 @@
-# require 'minitest/autorun'
-# require 'fileutils'
-# require 'rack/lint'
-# require 'rack/sendfile'
-# require 'rack/mock'
-# require 'tmpdir'
-
 describe Rack::Sendfile do
   def sendfile_body
-    FileUtils.touch File.join(Dir.tmpdir,  "rack_sendfile")
+    File.open File.join(File.realpath(Dir.tmpdir),  "rack_sendfile"), 'w'
+    # FileUtils.touch File.join(Dir.tmpdir,  "rack_sendfile")
     res = ['Hello World']
-    def res.to_path ; File.join(Dir.tmpdir,  "rack_sendfile") ; end
+    def res.to_path ; File.join(File.realpath(Dir.tmpdir),  "rack_sendfile") ; end
     res
   end
 
@@ -46,7 +40,7 @@ describe Rack::Sendfile do
       response.must_be :ok?
       response.body.must_be :empty?
       response.headers['Content-Length'].must_equal '0'
-      response.headers['X-Sendfile'].must_equal File.join(Dir.tmpdir,  "rack_sendfile")
+      response.headers['X-Sendfile'].must_equal File.join(File.realpath(Dir.tmpdir),  "rack_sendfile")
     end
   end
 
@@ -55,14 +49,14 @@ describe Rack::Sendfile do
       response.must_be :ok?
       response.body.must_be :empty?
       response.headers['Content-Length'].must_equal '0'
-      response.headers['X-Lighttpd-Send-File'].must_equal File.join(Dir.tmpdir,  "rack_sendfile")
+      response.headers['X-Lighttpd-Send-File'].must_equal File.join(File.realpath(Dir.tmpdir),  "rack_sendfile")
     end
   end
 
   it "sets X-Accel-Redirect response header and discards body" do
     headers = {
       'HTTP_X_SENDFILE_TYPE' => 'X-Accel-Redirect',
-      'HTTP_X_ACCEL_MAPPING' => "#{Dir.tmpdir}/=/foo/bar/"
+      'HTTP_X_ACCEL_MAPPING' => "#{File.realpath(Dir.tmpdir)}/=/foo/bar/"
     }
     request headers do |response|
       response.must_be :ok?
@@ -89,9 +83,9 @@ describe Rack::Sendfile do
   end
 
   it "sets X-Accel-Redirect response header and discards body when initialized with multiple mappings" do
-    begin
-      dir1 = Dir.mktmpdir
-      dir2 = Dir.mktmpdir
+    # begin
+      Dir.mktmpdir {|dir1|
+      Dir.mktmpdir {|dir2|
 
       first_body = open_file(File.join(dir1, 'rack_sendfile'))
       first_body.puts 'hello world'
@@ -117,16 +111,18 @@ describe Rack::Sendfile do
         response.headers['Content-Length'].must_equal '0'
         response.headers['X-Accel-Redirect'].must_equal '/wibble/rack_sendfile'
       end
-    ensure
-      FileUtils.remove_entry_secure dir1
-      FileUtils.remove_entry_secure dir2
-    end
+
+      }}
+    # ensure
+    #   FileUtils.remove_entry_secure dir1
+    #   FileUtils.remove_entry_secure dir2
+    # end
   end
 
   it "sets X-Accel-Redirect response header and discards body when initialized with multiple mappings via header" do
-    begin
-      dir1 = Dir.mktmpdir
-      dir2 = Dir.mktmpdir
+    # begin
+      Dir.mktmpdir {|dir1|
+      Dir.mktmpdir {|dir2|
 
       first_body = open_file(File.join(dir1, 'rack_sendfile'))
       first_body.puts 'hello world'
@@ -152,9 +148,13 @@ describe Rack::Sendfile do
         response.headers['Content-Length'].must_equal '0'
         response.headers['X-Accel-Redirect'].must_equal '/wibble/rack_sendfile'
       end
-    ensure
-      FileUtils.remove_entry_secure dir1
-      FileUtils.remove_entry_secure dir2
-    end
+
+      }}
+    # ensure
+    #   FileUtils.remove_entry_secure dir1
+    #   FileUtils.remove_entry_secure dir2
+    # end
   end
 end
+
+MTest::Unit.new.run

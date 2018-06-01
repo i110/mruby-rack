@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'rack/runtime'
-
 describe Rack::Runtime do
   def runtime_app(app, *args)
     Rack::Lint.new Rack::Runtime.new(app, *args)
@@ -31,7 +26,7 @@ describe Rack::Runtime do
   end
 
   it "allow multiple timers to be set" do
-    app = lambda { |env| sleep 0.1; [200, {'Content-Type' => 'text/plain'}, "Hello, World!"] }
+    app = lambda { |env| usleep 10000; [200, {'Content-Type' => 'text/plain'}, "Hello, World!"] }
     runtime = runtime_app(app, "App")
 
     # wrap many times to guarantee a measurable difference
@@ -48,3 +43,5 @@ describe Rack::Runtime do
     Float(response[1]['X-Runtime-All']).must_be :>, Float(response[1]['X-Runtime-App'])
   end
 end
+
+MTest::Unit.new.run

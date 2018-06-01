@@ -1,7 +1,3 @@
-require 'minitest/autorun'
-require 'rack/urlmap'
-require 'rack/mock'
-
 describe Rack::URLMap do
   it "dispatches paths correctly" do
     app = lambda { |env|
@@ -235,3 +231,5 @@ describe Rack::URLMap do
     res["X-ScriptName"].must_equal ""
   end
 end
+
+MTest::Unit.new.run

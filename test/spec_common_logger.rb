@@ -1,10 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/common_logger'
-# require 'rack/lint'
-# require 'rack/mock'
-# 
-# require 'logger'
-
 describe Rack::CommonLogger do
   obj = 'foobar'
   length = obj.size
@@ -93,3 +86,5 @@ describe Rack::CommonLogger do
     "hello world"
   end
 end
+
+MTest::Unit.new.run

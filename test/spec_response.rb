@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack'
-# require 'rack/response'
-# require 'stringio'
-
 describe Rack::Response do
   it 'has cache-control methods' do
     response = Rack::Response.new
@@ -508,3 +503,5 @@ describe Rack::Response, 'headers' do
     @response.has_header?('Foo').must_equal false
   end
 end
+
+MTest::Unit.new.run

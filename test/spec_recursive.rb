@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/lint'
-# require 'rack/recursive'
-# require 'rack/mock'
-
 describe Rack::Recursive do
   before do
   @app1 = lambda { |env|
@@ -73,3 +68,5 @@ describe Rack::Recursive do
     res["X-Query-String"].must_equal "meh"
   end
 end
+
+MTest::Unit.new.run

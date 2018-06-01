@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-### WARNING: there be hax in this file.
-
-# require 'rack/session/abstract/id'
-
 describe Rack::Session::Abstract::ID do
   attr_reader :id
 
@@ -29,3 +24,5 @@ describe Rack::Session::Abstract::ID do
   end
 
 end
+
+MTest::Unit.new.run

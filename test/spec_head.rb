@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/head'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::Head do
 
   def test_response(headers = {})
@@ -44,3 +39,5 @@ describe Rack::Head do
     body.must_be :closed?
   end
 end
+
+MTest::Unit.new.run

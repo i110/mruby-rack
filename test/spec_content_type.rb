@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/content_type'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::ContentType do
   def content_type(app, *args)
     Rack::Lint.new Rack::ContentType.new(app, *args)
@@ -44,3 +39,5 @@ describe Rack::ContentType do
     response[1]['Content-Type'].must_be_nil
   end
 end
+
+MTest::Unit.new.run

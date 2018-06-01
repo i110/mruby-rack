@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/content_length'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::ContentLength do
   def content_length(app)
     Rack::Lint.new Rack::ContentLength.new(app)
@@ -86,3 +81,5 @@ describe Rack::ContentLength do
     response[2].to_enum.to_a.must_equal expected
   end
 end
+
+MTest::Unit.new.run

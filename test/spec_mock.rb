@@ -1,9 +1,3 @@
-# require 'minitest/autorun'
-# require 'yaml'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'stringio'
-
 def marshal(env)
   env.map {|k, v| "#{k}:#{v}"}.join("\t")
 end
@@ -357,3 +351,5 @@ describe Rack::MockResponse, 'headers' do
     @res.delete_header('Foo').must_be_nil
   end
 end
+
+MTest::Unit.new.run

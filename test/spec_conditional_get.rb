@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'time'
-# require 'rack/conditional_get'
-# require 'rack/mock'
-
 describe Rack::ConditionalGet do
   def conditional_get(app)
     Rack::Lint.new Rack::ConditionalGet.new(app)
@@ -101,3 +96,5 @@ describe Rack::ConditionalGet do
   end
 
 end
+
+MTest::Unit.new.run

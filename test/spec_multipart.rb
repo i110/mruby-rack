@@ -1,12 +1,3 @@
-# coding: utf-8
-
-# require 'minitest/autorun'
-# require 'rack'
-# require 'rack/multipart'
-# require 'rack/multipart/parser'
-# require 'rack/utils'
-# require 'rack/mock'
-
 describe Rack::Multipart do
   def multipart_fixture(name, boundary = "AaB03x")
     file = multipart_file(name)
@@ -36,48 +27,48 @@ describe Rack::Multipart do
     params["text"].must_equal "contents"
   end
 
-  it "set US_ASCII encoding based on charset" do
-    env = Rack::MockRequest.env_for("/", multipart_fixture(:content_type_and_no_filename))
-    params = Rack::Multipart.parse_multipart(env)
-    params["text"].encoding.must_equal Encoding::US_ASCII
+  # it "set US_ASCII encoding based on charset" do
+  #   env = Rack::MockRequest.env_for("/", multipart_fixture(:content_type_and_no_filename))
+  #   params = Rack::Multipart.parse_multipart(env)
+  #   params["text"].encoding.must_equal Encoding::US_ASCII
 
-    # I'm not 100% sure if making the param name encoding match the
-    # Content-Type charset is the right thing to do.  We should revisit this.
-    params.keys.each do |key|
-      key.encoding.must_equal Encoding::US_ASCII
-    end
-  end
+  #   # I'm not 100% sure if making the param name encoding match the
+  #   # Content-Type charset is the right thing to do.  We should revisit this.
+  #   params.keys.each do |key|
+  #     key.encoding.must_equal Encoding::US_ASCII
+  #   end
+  # end
 
-  it "set BINARY encoding on things without content type" do
-    env = Rack::MockRequest.env_for("/", multipart_fixture(:none))
-    params = Rack::Multipart.parse_multipart(env)
-    params["submit-name"].encoding.must_equal Encoding::UTF_8
-  end
+  # it "set BINARY encoding on things without content type" do
+  #   env = Rack::MockRequest.env_for("/", multipart_fixture(:none))
+  #   params = Rack::Multipart.parse_multipart(env)
+  #   params["submit-name"].encoding.must_equal Encoding::UTF_8
+  # end
 
-  it "set UTF8 encoding on names of things without content type" do
-    env = Rack::MockRequest.env_for("/", multipart_fixture(:none))
-    params = Rack::Multipart.parse_multipart(env)
-    params.keys.each do |key|
-      key.encoding.must_equal Encoding::UTF_8
-    end
-  end
+  # it "set UTF8 encoding on names of things without content type" do
+  #   env = Rack::MockRequest.env_for("/", multipart_fixture(:none))
+  #   params = Rack::Multipart.parse_multipart(env)
+  #   params.keys.each do |key|
+  #     key.encoding.must_equal Encoding::UTF_8
+  #   end
+  # end
 
-  it "default text to UTF8" do
-    env = Rack::MockRequest.env_for("/", multipart_fixture(:text))
-    params = Rack::Multipart.parse_multipart(env)
-    params['submit-name'].encoding.must_equal Encoding::UTF_8
-    params['submit-name-with-content'].encoding.must_equal Encoding::UTF_8
-    params.keys.each do |key|
-      key.encoding.must_equal Encoding::UTF_8
-    end
-  end
+  # it "default text to UTF8" do
+  #   env = Rack::MockRequest.env_for("/", multipart_fixture(:text))
+  #   params = Rack::Multipart.parse_multipart(env)
+  #   params['submit-name'].encoding.must_equal Encoding::UTF_8
+  #   params['submit-name-with-content'].encoding.must_equal Encoding::UTF_8
+  #   params.keys.each do |key|
+  #     key.encoding.must_equal Encoding::UTF_8
+  #   end
+  # end
 
-  it "handles quoted encodings" do
-    # See #905
-    env = Rack::MockRequest.env_for("/", multipart_fixture(:unity3d_wwwform))
-    params = Rack::Multipart.parse_multipart(env)
-    params['user_sid'].encoding.must_equal Encoding::UTF_8
-  end
+  # it "handles quoted encodings" do
+  #   # See #905
+  #   env = Rack::MockRequest.env_for("/", multipart_fixture(:unity3d_wwwform))
+  #   params = Rack::Multipart.parse_multipart(env)
+  #   params['user_sid'].encoding.must_equal Encoding::UTF_8
+  # end
 
   it "raise RangeError if the key space is exhausted" do
     env = Rack::MockRequest.env_for("/", multipart_fixture(:content_type_and_no_filename))
@@ -98,53 +89,54 @@ describe Rack::Multipart do
     params['profile'].keys.must_include 'public_email'
   end
 
-  it "reject insanely long boundaries" do
-    # using a pipe since a tempfile can use up too much space
-    rd, wr = IO.pipe
+  # NOTE: no thread..
+  # it "reject insanely long boundaries" do
+  #   # using a pipe since a tempfile can use up too much space
+  #   rd, wr = IO.pipe
 
-    # we only call rewind once at start, so make sure it succeeds
-    # and doesn't hit ESPIPE
-    def rd.rewind; end
-    wr.sync = true
+  #   # we only call rewind once at start, so make sure it succeeds
+  #   # and doesn't hit ESPIPE
+  #   def rd.rewind; end
+  #   wr.sync = true
 
-    # write to a pipe in a background thread, this will write a lot
-    # unless Rack (properly) shuts down the read end
-    thr = Thread.new do
-      begin
-        wr.write("--AaB03x")
+  #   # write to a pipe in a background thread, this will write a lot
+  #   # unless Rack (properly) shuts down the read end
+  #   thr = Thread.new do
+  #     begin
+  #       wr.write("--AaB03x")
 
-        # make the initial boundary a few gigs long
-        longer = "0123456789" * 1024 * 1024
-        (1024 * 1024).times { wr.write(longer) }
+  #       # make the initial boundary a few gigs long
+  #       longer = "0123456789" * 1024 * 1024
+  #       (1024 * 1024).times { wr.write(longer) }
 
-        wr.write("\r\n")
-        wr.write('Content-Disposition: form-data; name="a"; filename="a.txt"')
-        wr.write("\r\n")
-        wr.write("Content-Type: text/plain\r\n")
-        wr.write("\r\na")
-        wr.write("--AaB03x--\r\n")
-        wr.close
-      rescue => err # this is EPIPE if Rack shuts us down
-        err
-      end
-    end
+  #       wr.write("\r\n")
+  #       wr.write('Content-Disposition: form-data; name="a"; filename="a.txt"')
+  #       wr.write("\r\n")
+  #       wr.write("Content-Type: text/plain\r\n")
+  #       wr.write("\r\na")
+  #       wr.write("--AaB03x--\r\n")
+  #       wr.close
+  #     rescue => err # this is EPIPE if Rack shuts us down
+  #       err
+  #     end
+  #   end
 
-    fixture = {
-      "CONTENT_TYPE" => "multipart/form-data; boundary=AaB03x",
-      "CONTENT_LENGTH" => (1024 * 1024 * 8).to_s,
-      :input => rd,
-    }
+  #   fixture = {
+  #     "CONTENT_TYPE" => "multipart/form-data; boundary=AaB03x",
+  #     "CONTENT_LENGTH" => (1024 * 1024 * 8).to_s,
+  #     :input => rd,
+  #   }
 
-    env = Rack::MockRequest.env_for '/', fixture
-    lambda {
-      Rack::Multipart.parse_multipart(env)
-    }.must_raise EOFError
-    rd.close
+  #   env = Rack::MockRequest.env_for '/', fixture
+  #   lambda {
+  #     Rack::Multipart.parse_multipart(env)
+  #   }.must_raise EOFError
+  #   rd.close
 
-    err = thr.value
-    err.must_be_instance_of Errno::EPIPE
-    wr.close
-  end
+  #   err = thr.value
+  #   err.must_be_instance_of Errno::EPIPE
+  #   wr.close
+  # end
 
   it 'raises an EOF error on content-length mistmatch' do
     env = Rack::MockRequest.env_for("/", multipart_fixture(:empty))
@@ -282,7 +274,7 @@ describe Rack::Multipart do
     head = "Content-Disposition: form-data; " +
       "name=\"files\"; filename=\"invalid\xC3.txt\"\r\n" +
       "Content-Type: text/plain\r\n"
-    head = head.force_encoding(Encoding::ASCII_8BIT)
+    # head = head.force_encoding(Encoding::ASCII_8BIT)
     params["files"][:head].must_equal head
     params["files"][:name].must_equal "files"
     params["files"][:tempfile].read.must_equal "contents"
@@ -303,7 +295,9 @@ describe Rack::Multipart do
   it "parse multipart form with a null byte in the filename" do
     env = Rack::MockRequest.env_for '/', multipart_fixture(:filename_with_null_byte)
     params = Rack::Multipart.parse_multipart(env)
-    params["files"][:filename].must_equal "flowers.exe\u0000.jpg"
+    # NOTE: here we deleted NULL bytes
+    # params["files"][:filename].must_equal "flowers.exe\u0000.jpg"
+    params["files"][:filename].must_equal "flowers.exe.jpg"
   end
 
   it "not include file params if no file was selected" do
@@ -715,3 +709,5 @@ Content-Type: image/png\r
     f.length.must_equal 26473
   end
 end
+
+MTest::Unit.new.run

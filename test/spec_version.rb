@@ -1,7 +1,3 @@
-# -*- encoding: utf-8 -*-
-require 'minitest/autorun'
-require 'rack'
-
 describe Rack do
   describe 'version' do
     it 'defaults to a hard-coded api version' do
@@ -9,3 +5,5 @@ describe Rack do
     end
   end
 end
+
+MTest::Unit.new.run

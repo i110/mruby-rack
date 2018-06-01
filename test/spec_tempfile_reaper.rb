@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/tempfile_reaper'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::TempfileReaper do
   class MockTempfile
     attr_reader :closed
@@ -62,3 +57,5 @@ describe Rack::TempfileReaper do
     tempfile2.closed.must_equal true
   end
 end
+
+MTest::Unit.new.run

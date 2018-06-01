@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'rack/null_logger'
-
 describe Rack::NullLogger do
   it "act as a noop logger" do
     app = lambda { |env|
@@ -19,3 +14,5 @@ describe Rack::NullLogger do
     res[2].to_enum.to_a.must_equal ["Hello, World!"]
   end
 end
+
+MTest::Unit.new.run

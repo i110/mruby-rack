@@ -1,6 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/session/abstract/id'
-
 describe Rack::Session::Abstract::SessionHash do
   attr_reader :hash
 
@@ -25,7 +22,7 @@ describe Rack::Session::Abstract::SessionHash do
     assert_equal [:bar, :qux], hash.values
   end
 
-  describe "#fetch" do
+  # describe "#fetch" do
     it "returns value for a matching key" do
       assert_equal :bar, hash.fetch(:foo)
     end
@@ -41,5 +38,7 @@ describe Rack::Session::Abstract::SessionHash do
     it "it raises when fetching unknown keys without defaults" do
       lambda { hash.fetch(:unknown) }.must_raise KeyError
     end
-  end
+  # end
 end
+
+MTest::Unit.new.run

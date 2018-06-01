@@ -1,11 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack'
-# require 'rack/cascade'
-# require 'rack/file'
-# require 'rack/lint'
-# require 'rack/urlmap'
-# require 'rack/mock'
-
 describe Rack::Cascade do
   def cascade(*args)
     Rack::Lint.new Rack::Cascade.new(*args)
@@ -61,3 +53,5 @@ describe Rack::Cascade do
     body.must_be :closed?
   end
 end
+
+MTest::Unit.new.run

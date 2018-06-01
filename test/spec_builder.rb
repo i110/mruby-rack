@@ -1,10 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/builder'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'rack/show_exceptions'
-# require 'rack/urlmap'
-
 class NothingMiddleware
   def initialize(app)
     @app = app
@@ -201,54 +194,58 @@ describe Rack::Builder do
     end.must_raise(RuntimeError)
   end
 
-  describe "parse_file" do
-    def config_file(name)
-      File.join(File.dirname(__FILE__), 'builder', name)
-    end
+  # TODO not implemented yet
+  # describe "parse_file" do
+  #   def config_file(name)
+  #     File.join(File.dirname(__FILE__), 'builder', name)
+  #   end
 
-    it "parses commented options" do
-      app, options = Rack::Builder.parse_file config_file('options.ru')
-      options[:debug].must_equal true
-      options[:environment].must_equal 'test'
-      options[:Port].must_equal '2929'
-      Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
-    end
+  #   it "parses commented options" do
+  #     app, options = Rack::Builder.parse_file config_file('options.ru')
+  #     options[:debug].must_equal true
+  #     options[:environment].must_equal 'test'
+  #     options[:Port].must_equal '2929'
+  #     Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
+  #   end
 
-    it "removes __END__ before evaluating app" do
-      app, _ = Rack::Builder.parse_file config_file('end.ru')
-      Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
-    end
+  #   it "removes __END__ before evaluating app" do
+  #     app, _ = Rack::Builder.parse_file config_file('end.ru')
+  #     Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
+  #   end
 
-    it "supports multi-line comments" do
-      proc, env = Rack::Builder.parse_file(config_file('comment.ru'))
-      proc.must_be_kind_of Proc
-      env.must_equal({})
-    end
+  #   it "supports multi-line comments" do
+  #     proc, env = Rack::Builder.parse_file(config_file('comment.ru'))
+  #     proc.must_be_kind_of Proc
+  #     env.must_equal({})
+  #   end
 
-    it "requires anything not ending in .ru" do
-      $: << File.dirname(__FILE__)
-      app, * = Rack::Builder.parse_file 'builder/anything'
-      Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
-      $:.pop
-    end
+  #   it "requires anything not ending in .ru" do
+  #     $: << File.dirname(__FILE__)
+  #     app, * = Rack::Builder.parse_file 'builder/anything'
+  #     Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
+  #     $:.pop
+  #   end
 
-    it 'requires an_underscore_app not ending in .ru' do
-      $: << File.dirname(__FILE__)
-      app, * = Rack::Builder.parse_file 'builder/an_underscore_app'
-      Rack::MockRequest.new(app).get('/').body.to_s.must_equal 'OK'
-      $:.pop
-    end
+  #   it 'requires an_underscore_app not ending in .ru' do
+  #     $: << File.dirname(__FILE__)
+  #     app, * = Rack::Builder.parse_file 'builder/an_underscore_app'
+  #     Rack::MockRequest.new(app).get('/').body.to_s.must_equal 'OK'
+  #     $:.pop
+  #   end
 
-    it "sets __LINE__ correctly" do
-      app, _ = Rack::Builder.parse_file config_file('line.ru')
-      Rack::MockRequest.new(app).get("/").body.to_s.must_equal '1'
-    end
-  end
+  #   it "sets __LINE__ correctly" do
+  #     app, _ = Rack::Builder.parse_file config_file('line.ru')
+  #     Rack::MockRequest.new(app).get("/").body.to_s.must_equal '1'
+  #   end
+  # end
 
-  describe 'new_from_string' do
-    it "builds a rack app from string" do
-      app, = Rack::Builder.new_from_string "run lambda{|env| [200, {'Content-Type' => 'text/plane'}, ['OK']] }"
-      Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
-    end
-  end
+  # TODO not implemented yet
+  # describe 'new_from_string' do
+  #   it "builds a rack app from string" do
+  #     app, = Rack::Builder.new_from_string "run lambda{|env| [200, {'Content-Type' => 'text/plane'}, ['OK']] }"
+  #     Rack::MockRequest.new(app).get("/").body.to_s.must_equal 'OK'
+  #   end
+  # end
 end
+
+MTest::Unit.new.run

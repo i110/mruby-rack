@@ -1,12 +1,5 @@
-# require 'minitest/autorun'
-# require 'rack/directory'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'tempfile'
-# require 'fileutils'
-
 describe Rack::Directory do
-  DOCROOT = File.expand_path(File.dirname(__FILE__)) unless defined? DOCROOT
+  DOCROOT = File.expand_path(File.dirname(__FILE__))
   FILE_CATCH = proc{|env| [200, {'Content-Type'=>'text/plain', "Content-Length" => "7"}, ['passed!']] }
 
   attr_reader :app
@@ -146,3 +139,5 @@ describe Rack::Directory do
     res.body.must_be :empty?
   end
 end
+
+MTest::Unit.new.run

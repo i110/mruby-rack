@@ -1,9 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/show_status'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'rack/utils'
-
 describe Rack::ShowStatus do
   def show_status(app)
     Rack::Lint.new Rack::ShowStatus.new(app)
@@ -102,3 +96,5 @@ describe Rack::ShowStatus do
     res.body.wont_match(/foo/)
   end
 end
+
+MTest::Unit.new.run

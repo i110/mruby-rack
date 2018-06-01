@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/auth/basic'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::Auth::Basic do
   def realm
     'WallysWorld'
@@ -87,3 +82,5 @@ describe Rack::Auth::Basic do
     realm.must_equal app.realm
   end
 end
+
+MTest::Unit.new.run

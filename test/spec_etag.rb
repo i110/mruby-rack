@@ -1,9 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/etag'
-# require 'rack/lint'
-# require 'rack/mock'
-# require 'time'
-
 describe Rack::ETag do
   def etag(app, *args)
     Rack::Lint.new Rack::ETag.new(app, *args)
@@ -106,3 +100,5 @@ describe Rack::ETag do
     body.must_be :closed?
   end
 end
+
+MTest::Unit.new.run

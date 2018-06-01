@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'rack/show_exceptions'
-# require 'rack/lint'
-# require 'rack/mock'
-
 describe Rack::ShowExceptions do
   def show_exceptions(app)
     Rack::Lint.new Rack::ShowExceptions.new(app)
@@ -59,7 +54,7 @@ describe Rack::ShowExceptions do
     end
   end
 
-  # mruby doesn't support raise with backtrace argument
+  # NOTE: mruby doesn't support raise with backtrace argument
   # it "handles exceptions without a backtrace" do
   #   res = nil
   #
@@ -79,3 +74,5 @@ describe Rack::ShowExceptions do
   #   assert_match(res, /unknown location/)
   # end
 end
+
+MTest::Unit.new.run

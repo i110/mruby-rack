@@ -1,5 +1,3 @@
-$mrbtest_verbose = true
-require "test/assert.rb"
 module Minitest
 end
 Minitest::Expectation = Struct.new :target, :ctx # :nodoc:
@@ -18,82 +16,62 @@ module Kernel
     cls = sclas.create name, desc
 
     stack.push cls
-    # FIXME
-    # assert(desc) do
-      cls.class_eval(&block)
-    # end
+    cls.class_eval(&block)
     stack.pop
     cls
   end
 end
 
-class Minitest::Spec
-# class Minitest::Spec < Minitest::Test
+class MTest::Unit::TestCase
+  # NOTE: MTest::Unit::TestCase#assert_raise ignores subclassing chain, so copy this from
+  # https://github.com/seattlerb/minitest/blob/master/lib/minitest/assertions.rb
+  # and use it via must_raise
+  def assert_raises *exp
+    msg = "#{exp.pop}.\n" if String === exp.last
+    exp << StandardError if exp.empty?
+
+    begin
+      yield
+    rescue *exp => e
+      pass # count assertion
+      return e
+    rescue MTest::Skip
+      # don't count assertion
+      raise
+    rescue Exception => e
+      flunk proc {
+        exception_details(e, "#{msg}#{mu_pp(exp)} exception expected, not")
+      }
+    end
+
+    exp = exp.first if exp.size == 1
+
+    flunk "#{msg}#{mu_pp(exp)} expected but nothing was raised."
+  end
+
+  def refute_respond_to(obj, meth, msg = nil)
+    msg ||= "Expected #{obj.inspect} to not respond to ##{meth}"
+    assert_false obj.respond_to?(meth), msg
+  end
+
+end
+
+class Minitest::Spec < MTest::Unit::TestCase
 
   $__minitest_current_spec = nil
   def self.current # :nodoc:
-    # Thread.current[:current_spec]
     $__minitest_current_spec
   end
 
-  # def initialize name # :nodoc:
-  #   super
-  #   $__minitest_current_spec = self
-  #   # Thread.current[:current_spec] = self
-  # end
+  def initialize name = nil # :nodoc:
+    super
+    $__minitest_current_spec = self
+  end
 
   ##
   # Oh look! A Minitest::Spec::DSL module! Eat your heart out DHH.
 
   module DSL
-    ##
-    # Contains pairs of matchers and Spec classes to be used to
-    # calculate the superclass of a top-level describe. This allows for
-    # automatically customizable spec types.
-    #
-    # See: register_spec_type and spec_type
-
-    # TYPES = [[//, Minitest::Spec]]
-
-    ##
-    # Register a new type of spec that matches the spec's description.
-    # This method can take either a Regexp and a spec class or a spec
-    # class and a block that takes the description and returns true if
-    # it matches.
-    #
-    # Eg:
-    #
-    #     register_spec_type(/Controller$/, Minitest::Spec::Rails)
-    #
-    # or:
-    #
-    #     register_spec_type(Minitest::Spec::RailsModel) do |desc|
-    #       desc.superclass == ActiveRecord::Base
-    #     end
-
-    # def register_spec_type *args, &block
-    #   if block then
-    #     matcher, klass = block, args.first
-    #   else
-    #     matcher, klass = *args
-    #   end
-    #   TYPES.unshift [matcher, klass]
-    # end
-
-    ##
-    # Figure out the spec class to use based on a spec's description. Eg:
-    #
-    #     spec_type("BlahController") # => Minitest::Spec::Rails
-
-    # def spec_type desc, *additional
-    #   TYPES.find { |matcher, _klass|
-    #     if matcher.respond_to? :call then
-    #       matcher.call desc, *additional
-    #     else
-    #       matcher === desc.to_s
-    #     end
-    #   }.last
-    # end
 
     STACK = []
     def describe_stack
@@ -110,44 +88,19 @@ class Minitest::Spec
       end
     end
 
-    ##
-    # Define a 'before' action. Inherits the way normal methods should.
-    #
-    # NOTE: +type+ is ignored and is only there to make porting easier.
-    #
-    # Equivalent to Minitest::Test#setup.
-
     def before _type = nil, &block
       define_method :setup do
-        # super() # FIXME: superclass info lost [mruby limitation]?
+        super()
         self.instance_eval(&block)
       end
     end
-
-    ##
-    # Define an 'after' action. Inherits the way normal methods should.
-    #
-    # NOTE: +type+ is ignored and is only there to make porting easier.
-    #
-    # Equivalent to Minitest::Test#teardown.
 
     def after _type = nil, &block
       define_method :teardown do
         self.instance_eval(&block)
-        # super() # FIXME: superclass info lost [mruby limitation]?
+        super()
       end
     end
-
-    ##
-    # Define an expectation with name +desc+. Name gets morphed to a
-    # proper test method name. For some freakish reason, people who
-    # write specs don't like class inheritance, so this goes way out of
-    # its way to make sure that expectations aren't inherited.
-    #
-    # This is also aliased to #specify and doesn't require a +desc+ arg.
-    #
-    # Hint: If you _do_ want inheritance, use minitest/test. You can mix
-    # and match between assertions and expectations as much as you want.
 
     def it desc = "anonymous", &block
       block ||= proc { skip "(no tests defined)" }
@@ -165,17 +118,8 @@ class Minitest::Spec
       #   undef_klass.send :undef_method, name
       # end
 
-ins = self.new
-ins.setup if ins.respond_to? :setup
-ins.instance_eval(&block)
-ins.teardown if ins.respond_to? :teardown
       name
     end
-
-    ##
-    # Essentially, define an accessor for +name+ with +block+.
-    #
-    # Why use let instead of def? I honestly don't know.
 
     def let name, &block
       name = name.to_s
@@ -191,10 +135,6 @@ ins.teardown if ins.respond_to? :teardown
         @_memoized.fetch(name) { |k| @_memoized[k] = instance_eval(&block) }
       end
     end
-
-    ##
-    # Another lazy man's accessor generator. Made even more lazy by
-    # setting the name for you to +subject+.
 
     def subject &block
       let :subject, &block
@@ -224,27 +164,7 @@ ins.teardown if ins.respond_to? :teardown
     attr_reader :desc # :nodoc:
     alias :specify :it
 
-    ##
-    # Rdoc... why are you so dumb?
-
     module InstanceMethods
-      ##
-      # Returns a value monad that has all of Expectations methods
-      # available to it.
-      #
-      # Also aliased to #value and #expect for your aesthetic pleasure:
-      #
-      #         _(1 + 1).must_equal 2
-      #     value(1 + 1).must_equal 2
-      #    expect(1 + 1).must_equal 2
-      #
-      # This method of expectation-based testing is preferable to
-      # straight-expectation methods (on Object) because it stores its
-      # test context, bypassing our hacky use of thread-local variables.
-      #
-      # At some point, the methods on Object will be deprecated and then
-      # removed.
-
       def _ value = nil, &block
         Minitest::Expectation.new block || value, self
       end
@@ -266,39 +186,25 @@ ins.teardown if ins.respond_to? :teardown
 
   extend DSL
 
-  # TYPES = DSL::TYPES # :nodoc:
-end
-
-# require "minitest/expectations"
-
-def assert_match(matcher, obj, msg = nil)
-  msg ||= "Expected #{matcher.inspect} to match #{obj.inspect}"
-  assert_respond_to matcher, :"=~"
-  matcher = Regexp.new Regexp.escape matcher if String === matcher
-  assert_true matcher =~ obj, msg
-end
-
-def assert_respond_to(obj, meth, msg = nil)
-  msg ||= "Expected #{obj.inspect} (#{obj.class}) to respond to ##{meth}"
-  assert_true obj.respond_to?(meth), msg
-end
-
-def refute_respond_to(obj, meth, msg = nil)
-  msg ||= "Expected #{obj.inspect} to not respond to ##{meth}"
-  assert_false obj.respond_to?(meth), msg
 end
 
 module Minitest::Expectations
   UNDEFINED = Object.new # :nodoc:
 
+  def must_be(op, other = UNDEFINED, msg = nil)
+    return assert_predicate self, op, msg if UNDEFINED == other
+    msg ||= "Expected #{self.inspect} to be #{op} #{other.inspect}"
+    assert self.__send__(op, other), msg
+  end
+
   def must_be_empty(msg = nil)
     msg ||= "Expected #{self.inspect} to be empty"
-    assert_respond_to(self, :empty?)
-    assert_true(self.empty?, msg)
+    Minitest::Spec.current.assert_respond_to(self, :empty?)
+    Minitest::Spec.current.assert_true(self.empty?, msg)
   end
 
   def must_equal(exp, msg = nil)
-    assert_equal(exp, self, msg)
+    Minitest::Spec.current.assert_equal(exp, self, msg)
   end
 
   # def must_be_close_to; end
@@ -306,37 +212,37 @@ module Minitest::Expectations
   # def must_be_within_epsilon; end
 
   def must_include(obj, msg = nil)
-    assert_include(self, obj, msg)
+    Minitest::Spec.current.assert_include(self, obj, msg)
   end
 
   def must_be_instance_of(cls, msg = nil)
     msg ||= "Expected #{self.inspect} to be an instance of #{cls}, not #{self.class}"
-    assert_true(self.instance_of?(cls), msg)
+    Minitest::Spec.current.assert_true(self.instance_of?(cls), msg)
   end
 
   def must_be_kind_of(cls, msg = nil)
     msg ||= "Expected #{self.inspect} to be a kind of #{cls}, not #{self.class}"
-    assert_true(self.kind_of?(cls), msg)
+    Minitest::Spec.current.assert_true(self.kind_of?(cls), msg)
   end
 
   def must_match(matcher, msg = nil)
     msg ||= "Expected #{matcher.inspect} to match #{self.inspect}"
-    assert_respond_to(matcher, :"=~")
+    Minitest::Spec.current.assert_respond_to(matcher, :"=~")
     matcher = Regexp.new(Regexp.escape(matcher)) if String === matcher
-    assert_true(matcher =~ self, msg)
+    Minitest::Spec.current.assert_true(matcher =~ self, msg)
   end
 
   def must_be_nil(msg = nil)
-    assert_nil(self, msg)
+    Minitest::Spec.current.assert_nil(self, msg)
   end
 
   def must_be(op, obj = UNDEFINED, msg = nil)
     if UNDEFINED == obj
       msg ||= "Expected #{self.inspect} to be #{op}"
-      assert_true(self.__send__(op), msg)
+      Minitest::Spec.current.assert_true(self.__send__(op), msg)
     else
       msg ||= "Expected #{self.inspect} to be #{op} #{obj.inspect}"
-      assert_true(self.__send__(op, obj), msg)
+      Minitest::Spec.current.assert_true(self.__send__(op, obj), msg)
     end
   end
 
@@ -344,29 +250,31 @@ module Minitest::Expectations
 
   # TODO: move to Proc?
   def must_raise(*exp)
-    if Proc === self
-      assert_raise(*exp, &self)
-    end
+    return unless Proc === self
+    Minitest::Spec.current.assert_raises(*exp, &self)
   end
 
   def must_respond_to(meth, msg = nil)
-    assert_respond_to(self, meth, msg)
+    Minitest::Spec.current.assert_respond_to(self, meth, msg)
   end
 
   # def must_be_same_as; end
 
   # def must_be_silent; end
 
-  # def must_throw; end
+  def must_throw(sym, msg = nil)
+    return unless Proc == self
+    Minitest::Spec.current.assert_throws(sym, msg, &self)
+  end
 
   def wont_be_empty(msg = nil)
     msg ||= "Expected #{self.inspect} to not be empty"
-    assert_respond_to(self, :empty?)
-    assert_false(self.empty?, msg)
+    Minitest::Spec.current.assert_respond_to(self, :empty?)
+    Minitest::Spec.current.assert_false(self.empty?, msg)
   end
 
   def wont_equal(exp, msg = nil)
-    assert_not_equal(exp, self, msg)
+    Minitest::Spec.current.assert_not_equal(exp, self, msg)
   end
 
   # def wont_be_close_to; end
@@ -374,44 +282,44 @@ module Minitest::Expectations
   # def wont_be_within_epsilon; end
 
   def wont_include(obj, msg = nil)
-    assert_not_include(self, obj, msg)
+    Minitest::Spec.current.assert_not_include(self, obj, msg)
   end
 
   def wont_be_instance_of(cls, msg = nil)
     msg ||= "Expected #{self.inspect} to not be an instance of #{cls}"
-    assert_false(self.instance_of?(cls), msg)
+    Minitest::Spec.current.assert_false(self.instance_of?(cls), msg)
   end
 
   def wont_be_kind_of(cls, msg = nil)
     msg ||= "Expected #{self.inspect} to not be a kind of #{cls}"
-    assert_false(self.kind_of?(cls), msg)
+    Minitest::Spec.current.assert_false(self.kind_of?(cls), msg)
   end
 
   def wont_match(matcher, msg = nil)
-    msg ||= "Expected #{matcher.inspect} to not match #{obj.inspect}"
-    assert_respond_to(matcher, :"=~")
+    msg ||= "Expected #{matcher.inspect} to not match #{self.inspect}"
+    Minitest::Spec.current.assert_respond_to(matcher, :"=~")
     matcher = Regexp.new(Regexp.escape(matcher)) if String === matcher
-    assert_false(matcher =~ obj, msg)
+    Minitest::Spec.current.refute(matcher =~ self, msg)
   end
 
   def wont_be_nil(msg = nil)
     msg ||= "Expected #{self.inspect} to not be nil"
-    diff = assertion_diff(nil, self)
-    assert_false(self.nil?, msg, diff)
+    diff = Minitest::Spec.current.assertion_diff(nil, self)
+    Minitest::Spec.current.assert_false(self.nil?, msg, diff)
   end
 
   def wont_be(op, obj = UNDEFINED, msg = nil)
     if UNDEFINED == obj
       msg ||= "Expected #{self.inspect} to not be #{op}"
-      assert_false(self.__send__(op), msg)
+      Minitest::Spec.current.assert_false(self.__send__(op), msg)
     else
       msg ||= "Expected #{self.inspect} to not be #{op} #{obj.inspect}"
-      assert_false(self.__send__(op, obj), msg)
+      Minitest::Spec.current.assert_false(self.__send__(op, obj), msg)
     end
   end
 
   def wont_respond_to(meth, msg = nil)
-    refute_respond_to(self, meth, msg)
+    Minitest::Spec.current.refute_respond_to(self, meth, msg)
   end
 
   # def wont_be_same_as; end

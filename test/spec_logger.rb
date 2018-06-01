@@ -1,9 +1,3 @@
-# require 'minitest/autorun'
-# require 'stringio'
-# require 'rack/lint'
-# require 'rack/logger'
-# require 'rack/mock'
-
 describe Rack::Logger do
   app = lambda { |env|
     log = env['rack.logger']
@@ -22,3 +16,5 @@ describe Rack::Logger do
     errors.string.must_match(/WARN -- : Nothing to do/)
   end
 end
+
+MTest::Unit.new.run

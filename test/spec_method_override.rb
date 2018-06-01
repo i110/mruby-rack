@@ -1,8 +1,3 @@
-# require 'minitest/autorun'
-# require 'stringio'
-# require 'rack/method_override'
-# require 'rack/mock'
-
 describe Rack::MethodOverride do
   def app
     Rack::Lint.new(Rack::MethodOverride.new(lambda {|e|
@@ -94,3 +89,5 @@ EOF
     env["REQUEST_METHOD"].must_equal "POST"
   end
 end
+
+MTest::Unit.new.run
