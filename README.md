@@ -12,55 +12,55 @@ Add the line below to your `build_config.rb`:
 
 ## Implemented classes
 
-| class                      | mruby-rack | memo |
-| -------------------------  | -------- | ---- |
-| Auth::Abstract::Handler    |    o     |      |
-| Auth::Abstract::Request    |    o     |      |
-| Auth::Basic                |    o     |      |
-| Auth::Digest::MD5          |    o     |      |
-| Auth::Digest::Nonce        |    o     |      |
-| Auth::Digest::Params       |    o     |      |
-| Auth::Digest::Request      |    o     |      |
-| BodyProxy                  |    o     |      |
-| Builder                    |    o     |      |
-| Cascade                    |    o     |      |
-| Chunked                    |    o     |      |
-| CommonLogger               |    o     |      |
-| ConditionalGet             |    o     |      |
-| Config                     |    o     |      |
-| ContentLength              |    o     |      |
-| ContentType                |    o     |      |
-| Directory                  |    o     |      |
-| Etag                       |    o     |      |
-| File                       |    o     |      |
-| Head                       |    o     |      |
-| Lint                       |    o     |      |
-| Logger                     |    o     |      |
-| MediaType                  |    o     |      |
-| MethodOverride             |    o     |      |
-| Mime                       |    o     |      |
-| Mock                       |    o     |      |
-| Multipart                  |    o     |      |
-| Multipart::Generator       |    o     |      |
-| Multipart::Parser          |    o     |      |
-| Multipart::UploadedFile    |    o     |      |
-| NullLogger                 |    o     |      |
-| QueryParser                |    o     |      |
-| Rack                       |    o     |      |
-| Recursive                  |    o     |      |
-| Reloader                   |    o     |      |
-| Request                    |    o     |      |
-| Response                   |    o     |      |
-| RewindableInput            |    o     |      |
-| Runtime                    |    o     |      |
-| Sendfile                   |    o     |      |
-| Session::Abstract::Id      |    o     |      |
-| ShowExceptions             |    o     |      |
-| ShowStatus                 |    o     |      |
-| Static                     |    o     |      |
-| TempfileReaper             |    o     |      |
-| URLMap                     |    o     |      |
-| Utils                      |    o     |      |
+| class                            | mruby-rack | memo |
+| -------------------------------  | -------- | ---- |
+| Rack::Auth::Abstract::Handler    |    o     |      |
+| Rack::Auth::Abstract::Request    |    o     |      |
+| Rack::Auth::Basic                |    o     |      |
+| Rack::Auth::Digest::MD5          |    o     |      |
+| Rack::Auth::Digest::Nonce        |    o     |      |
+| Rack::Auth::Digest::Params       |    o     |      |
+| Rack::Auth::Digest::Request      |    o     |      |
+| Rack::BodyProxy                  |    o     |      |
+| Rack::Builder                    |    o     |      |
+| Rack::Cascade                    |    o     |      |
+| Rack::Chunked                    |    o     |      |
+| Rack::CommonLogger               |    o     |      |
+| Rack::ConditionalGet             |    o     |      |
+| Rack::Config                     |    o     |      |
+| Rack::ContentLength              |    o     |      |
+| Rack::ContentType                |    o     |      |
+| Rack::Directory                  |    o     |      |
+| Rack::Etag                       |    o     |      |
+| Rack::File                       |    o     |      |
+| Rack::Head                       |    o     |      |
+| Rack::Lint                       |    o     |      |
+| Rack::Logger                     |    o     |      |
+| Rack::MediaType                  |    o     |      |
+| Rack::MethodOverride             |    o     |      |
+| Rack::Mime                       |    o     |      |
+| Rack::Mock                       |    o     |      |
+| Rack::Multipart                  |    o     |      |
+| Rack::Multipart::Generator       |    o     |      |
+| Rack::Multipart::Parser          |    o     |      |
+| Rack::Multipart::UploadedFile    |    o     |      |
+| Rack::NullLogger                 |    o     |      |
+| Rack::QueryParser                |    o     |      |
+| Rack::Rack                       |    o     |      |
+| Rack::Recursive                  |    o     |      |
+| Rack::Reloader                   |    o     |      |
+| Rack::Request                    |    o     |      |
+| Rack::Response                   |    o     |      |
+| Rack::RewindableInput            |    o     |      |
+| Rack::Runtime                    |    o     |      |
+| Rack::Sendfile                   |    o     |      |
+| Rack::Session::Abstract::Id      |    o     |      |
+| Rack::ShowExceptions             |    o     |      |
+| Rack::ShowStatus                 |    o     |      |
+| Rack::Static                     |    o     |      |
+| Rack::TempfileReaper             |    o     |      |
+| Rack::URLMap                     |    o     |      |
+| Rack::Utils                      |    o     |      |
 
 ## License
 
