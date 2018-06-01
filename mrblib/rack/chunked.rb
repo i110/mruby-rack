@@ -24,7 +24,8 @@ module Rack
           size = chunk.bytesize
           next if size == 0
 
-          chunk = chunk.b
+          # NOTE: mruby has no encoding
+          # chunk = chunk.b
           yield [size.to_s(16), term, chunk, term].join
         end
         yield TAIL
