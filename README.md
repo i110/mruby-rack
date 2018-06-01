@@ -1,7 +1,9 @@
 mruby-rack
 ========
 
-`Rack` classes for mruby
+`Rack` classes for mruby.
+
+Current ported revision is: https://github.com/rack/rack/commit/f8415b8e1a6d64432e2ee6bb3ae3d951773bd0e6
 
 ## Installation
 Add the line below to your `build_config.rb`:
