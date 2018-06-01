@@ -72,8 +72,8 @@ module Rack
       [404, {CONTENT_TYPE => "text/plain", "X-Cascade" => "pass"}, ["Not Found: #{path}"]]
 
     ensure
-      env[PATH_INFO]   = path
-      env[SCRIPT_NAME] = script_name
+      env[Rack::PATH_INFO]   = path
+      env[Rack::SCRIPT_NAME] = script_name
     end
 
     private
