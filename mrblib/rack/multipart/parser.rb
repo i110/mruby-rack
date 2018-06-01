@@ -314,8 +314,11 @@ module Rack
         if filename.scan(/%.?.?/).all? { |s| s =~ /%[0-9a-fA-F]{2}/ }
           filename = Utils.unescape(filename)
         end
+        # NOTE: is this enough for security?
+        filename = filename.gsub(Utils::NULL_BYTE, "")
 
-        filename.scrub!
+        # NOTE mruby has no scrub methods
+        # filename.scrub!
 
         if filename !~ /\\[^\\"]/
           filename = filename.gsub(/\\(.)/, '\1')
