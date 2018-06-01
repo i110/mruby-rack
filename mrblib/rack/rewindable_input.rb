@@ -64,7 +64,9 @@ module Rack
       # even have a file entry on the filesystem anymore, though we can still
       # access it because we have the file handle open.
       @rewindable_io = Tempfile.new('RackRewindableInput')
-      @rewindable_io.chmod(0000)
+      # NOTE: File#chmod is not available in mruby-io
+      ::File.chmod(0000, @rewindable_io.path)
+      # @rewindable_io.chmod(0000)
       if filesystem_has_posix_semantics?
         raise 'Unlink failed. IO closed.' if @rewindable_io.closed?
         @unlinked = true
