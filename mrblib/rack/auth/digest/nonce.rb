@@ -18,7 +18,7 @@ module Rack
         end
 
         def self.parse(string)
-          new(*string.unpack("m*").first.split(' ', 2))
+          new(*string.unpack("m").first.split(' ', 2))
         end
 
         def initialize(timestamp = Time.now, given_digest = nil)
@@ -26,11 +26,11 @@ module Rack
         end
 
         def to_s
-          [([ @timestamp, digest ] * ' ')].pack("m*").strip
+          [([ @timestamp, digest ].join(' '))].pack("m*").strip
         end
 
         def digest
-          ::Digest::MD5.hexdigest([ @timestamp, self.class.private_key ] * ':')
+          ::Digest::MD5.hexdigest([ @timestamp, self.class.private_key ].join(':'))
         end
 
         def valid?
