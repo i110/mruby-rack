@@ -1,5 +1,6 @@
 mruby-rack
 ========
+[![Build Status](https://travis-ci.org/i110/mruby-rack.svg?branch=master)](https://travis-ci.org/i110/mruby-rack)
 
 `Rack` classes for mruby.
 
