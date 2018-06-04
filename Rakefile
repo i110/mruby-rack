@@ -1,6 +1,6 @@
 MRUBY_CONFIG=File.expand_path(ENV["MRUBY_CONFIG"] || "./build_config.rb")
 RAKE="ruby ./minirake"
-MRUBY_REVISION="3acaa44"
+MRUBY_REVISION="1.4.1"
 
 file :mruby do
   sh "git clone git://github.com/mruby/mruby.git"
