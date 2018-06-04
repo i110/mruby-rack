@@ -109,18 +109,12 @@ class Minitest::Spec < MTest::Unit::TestCase
       end
     end
 
-    def before _type = nil, &block
-      define_method :setup do
-        super()
-        self.instance_eval(&block)
-      end
+    attr_reader :setup, :teardown
+    def before &block
+      @setup = block
     end
-
-    def after _type = nil, &block
-      define_method :teardown do
-        self.instance_eval(&block)
-        super()
-      end
+    def after &block
+      @teardown = block
     end
 
     def it desc = "anonymous", &block
@@ -204,6 +198,24 @@ class Minitest::Spec < MTest::Unit::TestCase
       obj.send :include, InstanceMethods
     end
   end
+
+  # NOTE mruby has some limitations arounnd define_method and super
+  # which throws 'superclass info lost [mruby limitations]' error.
+  # so manually trace class chain here
+  [[:setup, true], [:teardown, false]].each {|name, reverse|
+    define_method(name) {
+      cls = self.class
+      blocks = []
+      while cls != ::Minitest::Spec
+        blocks << cls.send(name)
+        cls = cls.superclass
+        break if cls == ::Minitest::Spec
+      end
+      blocks.compact!
+      blocks.reverse! if reverse
+      blocks.each {|blk| self.instance_eval(&blk) }
+    }
+  }
 
   extend DSL
 
