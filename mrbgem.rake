@@ -54,10 +54,18 @@ MRuby::Gem::Specification.new('mruby-rack') do |spec|
     "#{dir}/mrblib/rack/tempfile_reaper.rb",
     "#{dir}/mrblib/rack/urlmap.rb",
   ]
-  Dir.glob("mrbgems/mruby-*/mrbgem.rake") do |x|
-    g = File.basename File.dirname x
-    spec.add_test_dependency g unless g =~ /^mruby-(bin-.*|test)$/
-  end
+
+  spec.add_dependency 'mruby-class-ext'
+  spec.add_dependency 'mruby-enum-ext'
+  spec.add_dependency 'mruby-eval'
+  spec.add_dependency 'mruby-io'
+  spec.add_dependency 'mruby-kernel-ext'
+  spec.add_dependency 'mruby-method'
+  spec.add_dependency 'mruby-numeric-ext'
+  spec.add_dependency 'mruby-object-ext'
+  spec.add_dependency 'mruby-string-ext'
+  spec.add_dependency 'mruby-symbol-ext'
+  spec.add_dependency 'mruby-time'
 
   spec.add_dependency 'mruby-onig-regexp'
   spec.add_dependency 'mruby-env'
@@ -65,19 +73,17 @@ MRuby::Gem::Specification.new('mruby-rack') do |spec|
   spec.add_dependency 'mruby-set'
   spec.add_dependency 'mruby-secure-random'
   spec.add_dependency 'mruby-stringio'
+  spec.add_dependency 'mruby-file-stat'
+  spec.add_dependency 'mruby-digest'
+  spec.add_dependency 'mruby-dir'
+  spec.add_dependency 'mruby-struct'
+  spec.add_dependency 'mruby-tempfile'
+  spec.add_dependency 'mruby-time-strftime'
   spec.add_dependency 'mruby-uri', :github => 'zzak/mruby-uri'
-  spec.add_dependency 'mruby-file-stat', :github => 'ksss/mruby-file-stat'
-  spec.add_dependency 'mruby-digest', :github => 'iij/mruby-digest'
-
-  spec.add_dependency 'mruby-io', :github => 'iij/mruby-io'
-  spec.add_dependency 'mruby-dir', :github => 'iij/mruby-dir'
-  spec.add_dependency 'mruby-tempfile', :github => 'iij/mruby-tempfile'
-  spec.add_dependency 'mruby-method', :github => 'ksss/mruby-method'
   spec.add_dependency 'mruby-logger', :github => 'katzer/mruby-logger'
-  spec.add_dependency 'mruby-time-strftime', :github => 'monochromegane/mruby-time-strftime'
 
-  spec.add_test_dependency 'mruby-catch-throw', :github => 'IceDragon200/mruby-catch-throw'
-  spec.add_test_dependency 'mruby-sleep', :github => 'matsumotory/mruby-sleep'
+  spec.add_test_dependency 'mruby-catch-throw'
+  spec.add_test_dependency 'mruby-sleep'
 
   spec.test_rbfiles = [
     "#{dir}/test/spec_auth_basic.rb",
